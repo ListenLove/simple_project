@@ -1,0 +1,454 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    height: 46px;
+    width: 100%;
+    background-color: darksalmon;
+}
+
+nav > ul {
+    float: right;
+    position: relative;
+    line-height: 46px;
+}
+
+nav > .logo {
+    opacity: 0.5;
+}
+
+span.logo {
+    margin-left: 16px;
+}
+
+nav > .logo:hover {
+    opacity: 1;
+}
+
+nav > ul > li {
+    list-style-type: none;
+    float: left;
+    margin-right: 20px;
+    opacity: 0.5;
+    font-size: 16px;
+}
+
+nav > ul > li:hover {
+    opacity: 1;
+}
+
+nav > ul > li a {
+    text-decoration: none;
+    color: white;
+}
+
+nav > ul > li > i {
+    color: white;
+    font-size: 18px;
+    margin-right: 3px;
+}
+
+main {
+    height: calc(100vh - 46px - 66px);
+    width: 100%;
+    background-color: darkcyan;
+}
+
+.content {
+    width: 82%;
+    height: 100%;
+    background-color: darkgrey;
+    margin: 0 auto;
+}
+
+.content > div {
+    height: 100%;
+}
+
+.content_left {
+    width: 60%;
+    float: left;
+    background-color: darkorange;
+
+}
+
+.content_right {
+    width: 40%;
+    float: right;
+    background-color: darkorchid;
+    overflow: hidden;
+}
+
+.content_toolbar {
+    height: 46px;
+    background-color: #2c2d30;
+}
+
+.content_toolbar > span {
+    text-align: center;
+    display: inline-block;
+    width: 120px;
+    border: white 1px solid;
+    border-radius: 3px;
+    vertical-align: -8px;
+    font-size: 16px;
+    line-height: 36px;
+    color: white;
+    opacity: 0.5;
+}
+
+.content_toolbar > span:hover {
+    opacity: 1;
+}
+
+.content_toolbar > span:first-child {
+    margin-left: 5px;
+}
+
+.content_toolbar i {
+    font-size: 18px;
+    margin-right: 3px;
+    vertical-align: -1px;
+}
+
+
+footer {
+    width: 100%;
+    height: 66px;
+    background-color: darkolivegreen;
+}
+
+.bar {
+    width: 82%;
+    height: 100%;
+    background-color: darkkhaki;
+    margin: 0 auto;
+}
+
+.content_list {
+    width: 100%;
+    height: calc(100% - 46px);
+    user-select: none;
+    overflow: auto;
+
+}
+
+.content_list > ul > li {
+    height: 46px;
+    line-height: 46px;
+    list-style-type: none;
+    color: white;
+    box-sizing: border-box;
+    border-bottom: white solid 2px;
+    opacity: 0.5;
+}
+
+.content_list > ul > li:hover {
+    opacity: 1;
+}
+
+.content_list > ul > li > div {
+    float: left;
+    height: 100%;
+    font-size: 16px;
+}
+
+.list_name {
+    width: 40%;
+    position: relative;
+}
+
+.list_name .list_menu {
+    position: absolute;
+    top: 25%;
+    right: 0;
+    float: right;
+    color: white;
+    font-size: 23px;
+    display: none;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+
+.list_name .list_menu > a {
+    width: 23px;
+    height: 23px;
+    vertical-align: -5px;
+    text-decoration: none;
+    float: left;
+    margin-right: 5px;
+}
+
+.menu_i {
+    display: block;
+    height: 23px;
+    width: 23px;
+    color: white;
+}
+
+div.list_check {
+    width: 46px;
+    background-color: #aa0000;
+}
+
+div.list_check > i {
+    margin: auto;
+    margin-top: 14px;
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: white 1px solid;
+    font-size: 14px;
+    /*box-sizing: border-box;*/
+
+}
+
+div.list_num {
+    width: 23px;
+    text-align: center;
+    background-color: lightgreen;
+}
+
+
+div.list_singer {
+    width: 15%;
+}
+
+div.list_singer {
+    width: 15%;
+}
+
+/*歌曲删除图标*/
+.list_duration {
+    display: flex;
+    align-items: center;
+    width: 10%;
+    justify-content: center;
+}
+
+.list_duration > a {
+    display: none;
+    width: 100%;
+    height: 23px;
+    float: left;
+    vertical-align: center;
+    text-align: center;
+    color: inherit;
+    font-size: 23px;
+    text-decoration: none;
+}
+
+/*右半部分内容*/
+.content_right {
+    text-align: center;
+    font-size: 14px;
+}
+
+.song_info {
+    /*overflow: hidden;*/
+}
+
+.content_right > .song_info > a {
+    display: block;
+    width: 201px;
+    height: 196px;
+    text-align: center;
+    background: url("images/album_cover_player.png") no-repeat;
+    margin: 0 auto;
+}
+
+.content_right > .song_info > a > img {
+
+    float: left;
+    width: 186px;
+    height: 186px;
+    border-radius: 5px;
+}
+
+.singer_info {
+    color: white;
+    line-height: 30px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.singer_info:first-of-type {
+    margin-top: 12px;
+}
+
+.singer_info > a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.singer_info > a:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.songs_lyric {
+    margin-top: 60px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    line-height: 30px;
+}
+
+.songs_lyric > li {
+    list-style: none;
+}
+
+.songs_lyric li.cur {
+    color: lightskyblue;
+}
+
+/* 底部播放栏 */
+footer > .bar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+footer > .bar a {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    /*background-color: dimgray;*/
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    opacity: 0.5;
+}
+
+footer > .bar a:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+footer > .bar > div {
+    height: 40px;
+    display: flex;
+    /*align-items: center;*/
+    justify-content: space-evenly;
+}
+
+.song_pre, .song_next {
+    font-size: 30px;
+}
+
+.play {
+    font-size: 42px;
+}
+
+
+.bar > .play_bar {
+    width: 20%;
+}
+
+
+.bar > .mode {
+    width: 30%;
+    background-color: cornflowerblue;
+}
+
+.bar > .mode > a {
+    font-size: 30px;
+    color: white;
+}
+
+
+/*进度栏上部样式*/
+footer > .bar > .songs_progress {
+    display: block;
+    width: 45%;
+    background-color: red;
+    font-size: 13px;
+}
+
+.songs_progress > .top {
+    width: 100%;
+    height: 32px;
+}
+
+.top > span {
+    line-height: 32px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.top > .songs_progress_info {
+    float: left;
+    margin-left: 5px;
+}
+
+.top > .songs_progress_info:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.top > .songs_progress_times {
+    float: right;
+    margin-right: 5px;
+}
+
+/*进度栏下部的进度条样式*/
+.bottom {
+    display: block;
+    width: 100%;
+    height: 8px;
+    background-color: black;
+    position: relative;
+}
+
+.progress_back {
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    top: 3px;
+    left: 0;
+}
+
+.progress_back > .progress_forward {
+    background-color: rgba(255, 255, 255, 1);
+    /* 下面的宽度可控制进度条的进度和圆点位置*/
+    width: 60%;
+    height: 3px;
+    left: 0;
+}
+
+.dot {
+    background-color: rgba(255, 255, 255, 1);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: relative;
+    top: -3px;
+    left: 100%;
+}
+
+/* 音量控制块样式 */
+.bar > .voice {
+    display: block;
+    width: 15%;
+    background-color: black;
+    position: relative;
+}
+
+.voice > a {
+    display: block;
+    font-size: 28px;
+    float: left;
+}
+.voice > .progress_back {
+    width: calc(100% - 45px);
+    position: absolute;
+    left: 45px;
+    top: 18px;
+}
+
+
+
+
+
+
+
+
