@@ -197,7 +197,7 @@ footer {
 .list_check {
     width: 46px;
     /*background-color: #aa0000;*/
-    opacity: 0.5;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .list_check:hover {
@@ -215,9 +215,9 @@ div.list_check > i {
     /*box-sizing: border-box;*/
 }
 
-.list_checked {
-    color: rgba(255, 255, 255, 1) !important;
-}
+/*.list_checked {
+    color: rgba(255, 255, 255, 1);
+}*/
 
 .list_num {
     width: 23px;
@@ -495,9 +495,15 @@ footer > .bar > .songs_progress {
     z-index: -1;
 }
 
-/*播放状态*/
-.play_mode {
-    color: rgba(255, 255, 255, 1) !important;
+/*高亮状态（选中或播放）*/
+.highlight_mode {
+    color: rgba(255, 255, 255, 1);
+}
+
+/*当曲目播放时，更改歌曲序号为播放状态图*/
+.number_wave {
+    color: transparent;
+    background: url("./images/wave.gif") no-repeat center center;
 }
 
 
