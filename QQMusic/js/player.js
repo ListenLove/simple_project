@@ -9,7 +9,7 @@
 
     Player.prototype = {
         constructor: Player,
-        songs_data: [],
+        songs_list: [],
         init: function ($audio) {
             this.$audio = $audio;
             this.audio = $audio.get(0);     /*获取原生JS DOM对象*/
@@ -28,6 +28,34 @@
                 this.$audio.attr("src", song.link_url);
                 this.audio.play();
                 this.currentSongIndex = index;
+            }
+        },
+        preIndex: function () {
+            let index = this.currentSongIndex;
+            index--;
+            if (index < 0) {
+                index = this.songs_list.length - 1;
+            }
+            return index;
+        },
+        nextIndex: function () {
+            let index = this.currentSongIndex;
+            index++;
+            if (index >= this.songs_list.length) {
+                index %= this.songs_list.length;
+            }
+            return index;
+        },
+        delSong: function (index) {
+            /*
+            * 删除序号为index歌曲后
+            * */
+            this.songs_list.splice(index, 1);
+
+            // 超级BUG修正
+            // **要调整currentSongIndex**
+            if (index <= this.currentSongIndex) {
+                this.currentSongIndex--;
             }
         }
     }

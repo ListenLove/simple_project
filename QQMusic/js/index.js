@@ -40,6 +40,7 @@ $(function () {
                 url: "./source/musiclist.json",
                 dataType: "json",
                 success: function (data) {
+                    player.songs_list = data;
                     let $songs_list = $(".content_list>ul");
                     $.each(data, function (index, elem) {
                         let $item_li = createSongLi(index, elem);
@@ -97,11 +98,61 @@ $(function () {
             "                            </div>\n" +
             "                        </div>\n" +
             "                        <div class=\"list_singer\">" + song.singer + "</div>\n" +
-            "                        <div class=\"list_duration\"><a href=\"javascript:;\" title=\"删除\" class=\"fa fa-trash-o\"></a><span>" + song.time + "</span>\n" +
+            "                        <div class=\"list_duration\"><a href=\"javascript:;\" title=\"删除\" class=\"fa fa-trash-o list_menu_del\"></a><span>" + song.time + "</span>\n" +
             "                        </div>\n" +
             "                    </li>");
         $song_item.get(0).index = index;
         $song_item.get(0).song = song;
         return $song_item;
     }
+
+    // 5. 底部音乐播放栏控制
+    /*
+    * 音乐栏播放按钮事件
+    * */
+    $(".play").click(function () {
+        /*判断有没有播放过音乐*/
+        if (player.currentSongIndex === -1) {
+            // 没有播放过音乐
+            $(".song_list_item").eq(0).find(".list_menu_play>i").trigger("click");
+        } else {
+            // 已经播放过音乐
+            $(".song_list_item").eq(player.currentSongIndex).find(".list_menu_play>i").trigger("click");
+        }
+    })
+    /*
+    * 音乐栏上一首歌曲切换
+    * */
+    $(".song_pre").click(function () {
+        $(".song_list_item").eq(player.preIndex()).find(".list_menu_play>i").trigger("click");
+    });
+    /*
+    * 音乐栏下一首歌曲切换
+    * */
+    $(".song_next").click(function () {
+        $(".song_list_item").eq(player.nextIndex()).find(".list_menu_play>i").trigger("click");
+    });
+
+    /*
+    * 6. 子菜单删除按钮点击事件
+    * */
+    $content_list.delegate(".list_menu_del", "click", function () {
+        let delIndex = $(this).parents(".song_list_item").get(0).index;
+        /*
+        * 判断一下是否播放的恰好是当前播放的歌曲
+        * */
+        if (player.currentSongIndex === delIndex) {
+            // 是的话，要播放下一首
+            $(".song_next").trigger("click");
+        }
+        // 删除歌曲列表中的歌曲条目
+        $(this).parents(".song_list_item").remove();
+        // 重新排序一下列表，序号不能混乱
+        player.delSong(delIndex);
+        $(".song_list_item").each(function (index) {
+            $(this).get(0).index = index;
+            $(this).find(".list_num").text(index + 1);
+        });
+
+    });
 })
