@@ -79,6 +79,7 @@ main {
     float: right;
     /*background-color: darkorchid;*/
     overflow: hidden;
+    user-select: none;
 }
 
 .content_toolbar {
@@ -125,6 +126,7 @@ footer {
     height: 100%;
     /*background-color: darkkhaki;*/
     margin: 0 auto;
+    user-select: none;
 }
 
 .content_list {
@@ -289,21 +291,21 @@ div.list_singer:hover {
     border-radius: 5px;
 }
 
-.singer_info, .album_info {
+.song_name, .singer_info, .album_info {
     color: white;
     line-height: 30px;
 }
 
-.singer_info {
+.song_name {
     margin-top: 12px;
 }
 
-.singer_info > a, .album_info > a {
+.song_info a {
     color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
 }
 
-.singer_info > a:hover, .album_info > a:hover {
+.song_info a:hover {
     color: rgba(255, 255, 255, 1);
 }
 
@@ -417,6 +419,7 @@ footer > .bar > .songs_progress {
     height: 8px;
     /*background-color: black;*/
     position: relative;
+    cursor: pointer;
 }
 
 .progress_back {
@@ -426,6 +429,10 @@ footer > .bar > .songs_progress {
     position: absolute;
     top: 3px;
     left: 0;
+}
+
+.progress_back * {
+    cursor: pointer;
 }
 
 .progress_back > .progress_forward {
@@ -452,6 +459,10 @@ footer > .bar > .songs_progress {
     width: 15%;
     /*background-color: black;*/
     position: relative;
+}
+
+.voice * {
+    cursor: pointer;
 }
 
 .voice > a {

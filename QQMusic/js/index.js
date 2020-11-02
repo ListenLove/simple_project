@@ -68,8 +68,9 @@ $(function () {
         let $musicBg = $(".mask_bg");
         // 歌曲信息栏
         let $singer_img = $(".song_info a img");
-        let $singer_info = $(".song_info .singer_info");
-        let $album_info = $(".song_info .album_info");
+        let $song_name = $(".song_info>.song_name>a");
+        let $singer_info = $(".song_info>.singer_info>a");
+        let $album_info = $(".song_info>.album_info>a");
         // 播放器栏
         let $progress_song_info = $(".songs_progress_info");
         let $progress_song_time = $(".songs_progress_times");
@@ -79,6 +80,7 @@ $(function () {
             }
         );
         $singer_img.attr("src", data.cover);
+        $song_name.text(data.name);
         $singer_info.text(data.singer);
         $album_info.text(data.album);
         $progress_song_info.text(data.name + " / " + data.singer);
@@ -185,6 +187,28 @@ $(function () {
             $(this).get(0).index = index;
             $(this).find(".list_num").text(index + 1);
         });
-
     });
+    /*
+    * 7. 播放栏进度条事件控制
+    * */
+    let $progressBack = $(".bottom");
+    let $progressFor = $(".bottom .progress_forward");
+    let $progressDot = $(".bottom .dot");
+    let progress = new Progress($progressBack, $progressFor, $progressDot);
+    // 进度条点击
+    progress.progressClick();
+    // 进度条拖拽
+    progress.progressMove();
+    /*
+    * 8. 音量控制的事件
+    * */
+    /*let $voiceBack = $(".voice .progress_back");
+    let $voiceFor = $(".voice .progress_forward");
+    let $voiceDot = $(".voice .dot");
+    // 音量控制
+    let voice = new Progress($voiceBack, $voiceFor, $voiceDot);
+    // 音量点击
+    voice.progressClick();
+    // 音量拖拽
+    voice.progressMove();*/
 })
