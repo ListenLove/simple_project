@@ -289,24 +289,22 @@ div.list_singer:hover {
     border-radius: 5px;
 }
 
-.singer_info {
+.singer_info, .album_info {
     color: white;
     line-height: 30px;
 }
 
-.singer_info:first-of-type {
+.singer_info {
     margin-top: 12px;
 }
 
-.singer_info > a {
-    opacity: 0.5;
+.singer_info > a, .album_info > a {
+    color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
-    color: white;
 }
 
-.singer_info > a:hover {
-    opacity: 1;
-
+.singer_info > a:hover, .album_info > a:hover {
+    color: rgba(255, 255, 255, 1);
 }
 
 .songs_lyric {

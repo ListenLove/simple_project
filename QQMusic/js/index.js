@@ -45,13 +45,44 @@ $(function () {
                     $.each(data, function (index, elem) {
                         let $item_li = createSongLi(index, elem);
                         $songs_list.append($item_li);
-                    })
+                    });
+                    /*
+                    * 默认将歌曲信息设置为歌曲列表的第一首歌曲
+                    * */
+                    LoadSongInfo(data[0]);
                 },
                 error: function (e) {
                     console.log(e);
                 }
             }
         );
+    }
+
+    /**
+     * 在歌曲信息栏、播放栏更新歌曲的相关信息
+     * @param data 传入的歌曲数组元素
+     * @constructor
+     */
+    function LoadSongInfo(data) {
+        // 页面背景
+        let $musicBg = $(".mask_bg");
+        // 歌曲信息栏
+        let $singer_img = $(".song_info a img");
+        let $singer_info = $(".song_info .singer_info");
+        let $album_info = $(".song_info .album_info");
+        // 播放器栏
+        let $progress_song_info = $(".songs_progress_info");
+        let $progress_song_time = $(".songs_progress_times");
+
+        $musicBg.css({
+                background: "url('" + data.cover + "')"
+            }
+        );
+        $singer_img.attr("src", data.cover);
+        $singer_info.text(data.singer);
+        $album_info.text(data.album);
+        $progress_song_info.text(data.name + " / " + data.singer);
+        $progress_song_time.text("00:00" + " / " + data.time);
     }
 
     // 3. 点击歌曲条目上的按钮执行相关功能
@@ -75,6 +106,7 @@ $(function () {
         $(this).toggleClass("fa-pause-circle");
         $(this).parents(".song_list_item").siblings().find('.list_menu_play>i').removeClass("fa-pause-circle");
         player.playSong(content_list_li.get(0).index, content_list_li.get(0).song);
+        LoadSongInfo(content_list_li.get(0).song);
     });
 
     // 自定义滚动条样式...用不了
