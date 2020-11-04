@@ -435,10 +435,10 @@ footer > .bar > .songs_progress {
     cursor: pointer;
 }
 
-.progress_back > .progress_forward {
+.songs_progress .progress_back > .progress_forward {
     background-color: rgba(255, 255, 255, 1);
     /* 下面的宽度可控制进度条的进度和圆点位置*/
-    width: 60%;
+    width: 0;
     height: 3px;
     left: 0;
 }
@@ -476,6 +476,13 @@ footer > .bar > .songs_progress {
     position: absolute;
     left: 45px;
     top: 18px;
+}
+.voice .progress_back > .progress_forward {
+    background-color: rgba(255, 255, 255, 1);
+    /* 下面的宽度可控制进度条的进度和圆点位置*/
+    width: 45%;
+    height: 3px;
+    left: 0;
 }
 
 /*音乐界面背景的高斯模糊样式*/

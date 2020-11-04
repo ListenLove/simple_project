@@ -87,7 +87,7 @@ $(function () {
         $progress_song_time.text("00:00" + " / " + data.time);
     }
 
-    // 3. 点击歌曲条目上的按钮执行相关功能
+    // 3. 点击歌曲条目上的播放按钮执行相关功能
     $content_list.delegate(".list_menu>.list_menu_play>i", "click", function () {
         let content_list_li = $(this).parents(".content_list li");
         if ($(this).hasClass("fa-pause-circle")) {
@@ -196,9 +196,13 @@ $(function () {
     let $progressDot = $(".bottom .dot");
     let progress = new Progress($progressBack, $progressFor, $progressDot);
     // 进度条点击
-    progress.progressClick();
+    progress.progressClick(function (value) {
+        player.setSongCurrentTime(value);
+    });
     // 进度条拖拽
-    progress.progressMove();
+    progress.progressMove(function (value) {
+        player.setSongCurrentTime(value);
+    });
     /*
     * 8. 音量控制的事件
     * */
@@ -211,4 +215,11 @@ $(function () {
     voice.progressClick();
     // 音量拖拽
     voice.progressMove();*/
+
+    /*8. 更新歌曲时间*/
+    player.updateSongTime(function (currentTime, duration, timeStr) {
+        $(".songs_progress_times").text(timeStr);
+        let value = (currentTime / duration) * 100;
+        progress.setProgress(value);
+    });
 })
