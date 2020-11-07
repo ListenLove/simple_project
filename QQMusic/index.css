@@ -471,13 +471,15 @@ footer > .bar > .songs_progress {
     float: left;
 }
 
-.voice > .progress_back {
+.voice > .voice_back {
     width: calc(100% - 45px);
     position: absolute;
     left: 45px;
     top: 18px;
+    background-color: rgba(255, 255, 255, 0.35);
+    height: 3px;
 }
-.voice .progress_back > .progress_forward {
+.voice .voice_forward {
     background-color: rgba(255, 255, 255, 1);
     /* 下面的宽度可控制进度条的进度和圆点位置*/
     width: 45%;

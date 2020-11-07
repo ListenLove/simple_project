@@ -94,6 +94,10 @@
                 if (value < 0 || value > 100) return;
                 this.audio.currentTime = value * this.audio.duration;
             },
+            setVolumeValue: function (value) {
+                if (value < 0 || value > 100) return;
+                this.audio.volume = value;
+            },
         }
 
         Player.prototype.init.prototype = Player.prototype;

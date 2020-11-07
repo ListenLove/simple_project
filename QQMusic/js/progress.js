@@ -4,7 +4,7 @@
 
 (function (window) {
     function Progress($progressBack, $progressFor, $progressDot) {
-        return Progress.prototype.init($progressBack, $progressFor, $progressDot);
+        return new Progress.prototype.init($progressBack, $progressFor, $progressDot);
     }
 
     Progress.prototype = {
@@ -24,7 +24,7 @@
                 let $clickLeft = event.pageX;
                 /*减8，是因为进度圆点的半径是4*/
                 let $result = $clickLeft - $backLeft;
-                $result = Math.min($result, $this.$progressBack.width() - 8);
+                $result = Math.min($result, $this.$progressBack.width());
                 $this.$progressFor.css("width", $result);
                 let value = ($result / $(this).width());
                 callback(value);
@@ -45,15 +45,16 @@
                     $clickLeft = event.pageX;
                     $result = $clickLeft - $backLeft;
                     /*减8，是因为进度圆点的半径是4*/
-                    $result = Math.min($result, $this.$progressBack.width() - 8);
+                    $result = Math.min($result, $this.$progressBack.width());
                     $this.$progressFor.css("width", $result);
                 });
                 // 3. 监听鼠标抬起事件
                 $(document).mouseup(function (event) {
                     $(document).off("mousemove");
                     let value = ((event.pageX - $backLeft) / $backLeft);
+
                     callback(value);
-                    console.log(value);
+                    // console.log(value);
                     $this.isMove = false;
                 })
             })

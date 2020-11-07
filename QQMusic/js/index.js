@@ -192,9 +192,11 @@ $(function () {
     * 7. 播放栏进度条事件控制
     * */
     let $progressBack = $(".bottom");
-    let $progressFor = $(".bottom .progress_forward");
+    console.log($progressBack);
+    let $progressFor = $(".progress_forward");
     let $progressDot = $(".bottom .dot");
     let progress = new Progress($progressBack, $progressFor, $progressDot);
+    console.log(progress);
     // 进度条点击
     progress.progressClick(function (value) {
         player.setSongCurrentTime(value);
@@ -206,15 +208,31 @@ $(function () {
     /*
     * 8. 音量控制的事件
     * */
-    /*let $voiceBack = $(".voice .progress_back");
-    let $voiceFor = $(".voice .progress_forward");
+    let $voiceBack = $(".voice_back");
+    let $voiceFor = $(".voice_forward");
     let $voiceDot = $(".voice .dot");
     // 音量控制
-    let voice = new Progress($voiceBack, $voiceFor, $voiceDot);
+    let voiceProgress = new Progress($voiceBack, $voiceFor, $voiceDot);
     // 音量点击
-    voice.progressClick();
+    voiceProgress.progressClick(function (value) {
+        player.setVolumeValue(value);
+    });
     // 音量拖拽
-    voice.progressMove();*/
+    voiceProgress.progressMove(function (value) {
+        player.setVolumeValue(value);
+    });
+    // 点击音量图标事件
+    // fixme 拖动点击音量控制条后会导致音乐进度条事件失效
+    $(".voice a").click(function () {
+        $(this).toggleClass("fa-volume-up").toggleClass("fa-volume-off");
+        //同时静音或恢复音量值
+        if (player.audio.volume > 0) {
+            player.audio.volume = 0;
+        } else {
+            player.audio.volume = ($(".voice_forward").width()) / ($(".voice_back").width());
+        }
+    });
+
 
     /*8. 更新歌曲时间*/
     player.updateSongTime(function (currentTime, duration, timeStr) {
