@@ -33,35 +33,37 @@
         progressMove: function (callback) {
             // 1. 监听鼠标按下事件
             let $this = this;
+            let $backLeft = $this.$progressBack.offset().left;
+            let $barWidth = $this.$progressBack.width();
             this.$progressBack.mousedown(function () {
-                let $backLeft = $(this).offset().left;
-                let $clickLeft;
                 let $result;
+                let $clickLeft;
+                $this.isMove = true;    /*让进度条随歌曲播放而增长的动画禁用*/
                 // 2. 监听鼠标移动事件
                 $(document).mousemove(function (event) {
-                    $this.isMove = true;    /*让进度条随歌曲播放而增长的动画禁用*/
                     // 找到背景距离窗口左边的距离
                     // 找到鼠标点击时距离窗口左边的距离
                     $clickLeft = event.pageX;
                     $result = $clickLeft - $backLeft;
                     /*减8，是因为进度圆点的半径是4*/
-                    $result = Math.min($result, $this.$progressBack.width());
-                    $this.$progressFor.css("width", $result);
+                    if ($result >= 0 && $result <= $barWidth) {
+                        $this.$progressFor.css("width", $result);
+                    }
                 });
                 // 3. 监听鼠标抬起事件
-                $(document).mouseup(function (event) {
+                $(document).mouseup(function () {
                     $(document).off("mousemove");
-                    let value = ((event.pageX - $backLeft) / $backLeft);
-
+                    $this.isMove = false;
+                    let value = (($clickLeft - $backLeft) / $barWidth);
+                    console.log(value);
                     callback(value);
                     // console.log(value);
-                    $this.isMove = false;
                 })
             })
         },
         setProgress: function (value) {
             if (value < 0 || value > 100 || this.isMove) {
-                return
+                return;
             }
             this.$progressFor.css({
                 width: value + "%",

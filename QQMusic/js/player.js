@@ -4,7 +4,7 @@
 
 (function (window) {
         function Player($audio) {
-            return Player.prototype.init($audio);
+            return new Player.prototype.init($audio);
         }
 
         Player.prototype = {
@@ -91,15 +91,14 @@
                 });
             },
             setSongCurrentTime: function (value) {
-                if (value < 0 || value > 100) return;
+                if (value < 0 || value > 100 || isNaN(value)) return;
                 this.audio.currentTime = value * this.audio.duration;
             },
             setVolumeValue: function (value) {
-                if (value < 0 || value > 100) return;
+                if (value < 0 || value > 1 || isNaN(value)) return;
                 this.audio.volume = value;
             },
         }
-
         Player.prototype.init.prototype = Player.prototype;
         window.Player = Player;
     }
