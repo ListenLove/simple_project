@@ -48,7 +48,9 @@ $(function () {
                 $(this).toggleClass("fa-pause-circle");
                 $(this).parents(".song_list_item").siblings().find('.list_menu_play>i').removeClass("fa-pause-circle");
                 player.playSong(content_list_li.get(0).index, content_list_li.get(0).song);
-                LoadSongInfo(content_list_li.get(0).song);
+                loadSongInfo(content_list_li.get(0).song);
+                console.log(content_list_li.get(0).song);
+                initLyrics(content_list_li.get(0).song);
             });
             /*
             * 6. 子菜单删除按钮点击事件
@@ -77,6 +79,7 @@ $(function () {
         *  1. 播放器配置
         * */
         let $audio = $("audio");
+        let lyric;
         let player = new Player($audio);
 
         /* 2. 加载位于本地source目录中的歌曲*/
@@ -97,7 +100,8 @@ $(function () {
                         /*
                         * 默认将歌曲信息设置为歌曲列表的第一首歌曲
                         * */
-                        LoadSongInfo(data[0]);
+                        loadSongInfo(data[0]);
+                        initLyrics(data[0]);
                     },
                     error: function (e) {
                         console.log(e);
@@ -106,12 +110,29 @@ $(function () {
             );
         }
 
+        /*
+        * 初始化 歌词信息
+        * */
+        function initLyrics(song) {
+
+            lyric = new Lyric(song.link_lrc);
+            let $lyricContainer = $(".songs_lyric");
+
+            lyric.loadLyrics(function () {
+                $lyricContainer.children().remove();
+                $.each(lyric.lyrics, function (index, ele) {
+                    let item = $("<li>" + ele + "</li>");
+                    $lyricContainer.append(item);
+                });
+            });
+        }
+
         /**
          * 在歌曲信息栏、播放栏更新歌曲的相关信息
          * @param data 传入的歌曲数组元素
          * @constructor
          */
-        function LoadSongInfo(data) {
+        function loadSongInfo(data) {
             // 页面背景
             let $musicBg = $(".mask_bg");
             // 歌曲信息栏
@@ -221,7 +242,14 @@ $(function () {
                 $(".songs_progress_times").text(timeStr);
                 let value = (currentTime / duration) * 100;
                 progress.setProgress(value);
-
+                let index = lyric.currentIndex(currentTime);
+                let $item = $(".songs_lyric li").eq(index);
+                $item.addClass("cur");
+                $item.siblings().removeClass("cur");
+                if (index <= 0) return;
+                $(".songs_lyric").css({
+                    marginTop: (-(index - 2) * 30) + "px"
+                });
             });
         }
 

@@ -309,11 +309,16 @@ div.list_singer:hover {
     color: rgba(255, 255, 255, 1);
 }
 
-.songs_lyric {
+.lyric_container {
     margin-top: 60px;
-    color: rgba(255, 255, 255, 0.7);
     font-weight: bold;
     line-height: 30px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.songs_lyric {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .songs_lyric > li {
@@ -479,6 +484,7 @@ footer > .bar > .songs_progress {
     background-color: rgba(255, 255, 255, 0.35);
     height: 3px;
 }
+
 .voice .voice_forward {
     background-color: rgba(255, 255, 255, 1);
     /* 下面的宽度可控制进度条的进度和圆点位置*/
