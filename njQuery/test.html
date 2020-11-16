@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>njQuery测试</title>
+    <script src="njQuery.js"></script>
+</head>
+<body>
+<button class="p">打声招呼～</button>
+<script>
+    $.ready(function () {
+            $(".p").on("click", function () {
+                alert("hello, world!");
+            });
+        }
+    )
+</script>
+</body>
+</html>
