@@ -1,31 +1,38 @@
 @import "src/assets/css/variable";
 /*根据dpr计算font-size*/
-@mixin font_dpr($font-size){
+@mixin font_dpr($font-size) {
   font-size: $font-size;
-  [data-dpr="2"] & { font-size: $font-size * 2;}
-  [data-dpr="3"] & { font-size: $font-size * 3;}
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+  }
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+  }
 }
+
 /*通过该函数设置字体大小，后期方便统一管理；*/
-@mixin font_size($size){
+@mixin font_size($size) {
   @include font_dpr($size);
 }
+
 // 不换行
-@mixin no-wrap(){
+@mixin no-wrap() {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
+
 // 限制行数
-@mixin clamp($row){
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:$row;
+@mixin clamp($row) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $row;
 }
 
 // 根据属性选择器来设置背景颜色
-@mixin bg_color(){
+@mixin bg_color() {
   background: $background-color-theme;
   [data-theme=theme1] & {
     background: $background-color-theme1;
@@ -34,7 +41,8 @@
     background: $background-color-theme2;
   }
 }
-@mixin bg_sub_color(){
+
+@mixin bg_sub_color() {
   background: $background-color-sub-theme;
   [data-theme=theme1] & {
     background: $background-color-sub-theme1;
@@ -44,7 +52,7 @@
   }
 }
 
-@mixin font_color(){
+@mixin font-color() {
   color: $font-color-theme;
   [data-theme=theme1] & {
     color: $font-color-theme1;
@@ -53,7 +61,8 @@
     color: $font-color-theme2;
   }
 }
-@mixin font_active_color(){
+
+@mixin font_active_color() {
   color: $font-active-color-theme;
   [data-theme=theme1] & {
     color: $font-active-color-theme1;
@@ -63,7 +72,7 @@
   }
 }
 
-@mixin border_color(){
+@mixin border_color() {
   border-color: $border-color-theme;
   [data-theme=theme1] & {
     border-color: $border-color-theme1;
@@ -73,24 +82,20 @@
   }
 }
 
-@mixin bg_img($url){
+@mixin bg_img($url) {
+  // 网易主体
   [data-theme=theme] & {
     background-image: url($url + '_163.png');
   }
-  [data-theme=theme1] & {
-    background-image: url($url + '_qq.png');
-  }
-  [data-theme=theme2] & {
-    background-image: url($url + '_it666.png');
-  }
-  background-size: cover;
-  background-repeat: no-repeat;
-
   [data-theme=theme][data-dpr='2'] & {
     background-image: url($url + '_163@2x.png');
   }
   [data-theme=theme][data-dpr='3'] & {
     background-image: url($url + '_163@3x.png');
+  }
+  // QQ 主题
+  [data-theme=theme1] & {
+    background-image: url($url + '_qq.png');
   }
   [data-theme=theme1][data-dpr='2'] & {
     background-image: url($url + '_qq@2x.png');
@@ -98,11 +103,17 @@
   [data-theme=theme1][data-dpr='3'] & {
     background-image: url($url + '_qq@3x.png');
   }
+  // 知渔主题
+  [data-theme=theme2] & {
+    background-image: url($url + '_it666.png');
+  }
   [data-theme=theme2][data-dpr='2'] & {
     background-image: url($url + '_it666@2x.png');
   }
   [data-theme=theme2][data-dpr='3'] & {
     background-image: url($url + '_it666@3x.png');
   }
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 

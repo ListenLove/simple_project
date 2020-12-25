@@ -1,15 +1,41 @@
 <template>
   <div id="app">
-    <div id="test">
-
-    </div>
+    <net-header></net-header>
+    <net-tabbar></net-tabbar>
+    <router-view></router-view>
   </div>
 </template>
+<script>
+import NetHeader from './components/header'
+import NetTabbar from './components/tabbar'
 
+export default {
+  components: { NetHeader, NetTabbar }
+}
+
+</script>
 <style lang="scss">
-#test {
+@import "assets/css/variable";
+* {
+  margin: 0;
+  padding: 0;
+}
+.button-container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+button {
   width: 100px;
   height: 100px;
-  background-color: darkcyan;
+  &:nth-of-type(1) {
+    background-color: $background-color-theme;
+  }
+  &:nth-of-type(2) {
+    background-color: $background-color-theme1;
+  }
+  &:nth-of-type(3) {
+    background-color: $background-color-theme2;
+  }
 }
 </style>

@@ -8,3 +8,5 @@
     `JavaScript`项目
     ![njQuery 示例代码](img/njQuery_readme.png)
     - [ ] 封装原生`AJAX`插件，使之功能更加完善。
+3. [JS 数据结构和算法的简单封装库]
+    - [ ] 构想，待完成。
