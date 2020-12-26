@@ -1,9 +1,14 @@
 <template>
   <div class="recommend">
-    <Banner :banners="banners"></Banner>
-    <Personalized :result="result" :title="'推荐歌单'"></Personalized>
-    <Personalized :result="album" :title="'最新专辑'"></Personalized>
-    <SongList :song_list="songs_list"></SongList>
+    <div class="core-container">
+      <ScrollView>
+      <Banner :banners="banners"></Banner>
+      <Personalized :result="result" :title="'推荐歌单'" @selectId="selectSongDetail"></Personalized>
+      <Personalized :result="album" :title="'最新专辑'"></Personalized>
+      <SongList :song_list="songs_list"></SongList>
+    </ScrollView>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -12,10 +17,12 @@ import { getNewAlbum, getNewSongList, getPersonalized, getRecommendBanner } from
 import Banner from '@/components/Recommend/Banner'
 import Personalized from '@/components/Recommend/Personalized'
 import SongList from '@/components/Recommend/SongList'
+import ScrollView from '@/components/ScrollView'
 
 export default {
   name: 'Recommend',
   components: {
+    ScrollView,
     SongList,
     Personalized,
     Banner
@@ -47,7 +54,7 @@ export default {
       })
     getNewSongList()
       .then(value => {
-        console.log(value)
+        // console.log(value)
         this.songs_list = value.result
       })
       .catch(reason => {
@@ -61,10 +68,36 @@ export default {
       album: [],
       songs_list: []
     }
+  },
+  methods: {
+    selectSongDetail (id) {
+      // console.log(id)
+      this.$router.push({
+        path: '/recommend/detail',
+        query: {
+          id: id // 查询 id 参数
+        }
+      })
+    }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.recommend {
+  position: fixed;
+  top: 184px;
+  left: 0;
+  bottom: 0;
+  //z-index: 999;
+  overflow: hidden;
+  width: 100%;
+
+  .core-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+}
 
 </style>

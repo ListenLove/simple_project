@@ -3,8 +3,8 @@
     <div class="personalized-title">
       <h3>{{ title }}</h3>
     </div>
-    <div class="result_list">
-      <div class="item" v-for="r in result" :key="r.id">
+    <div class="result_list" >
+      <div class="item" v-for="r in result" :key="r.id" @click="selectId(r.id)">
 <!--        <img :src="r.picUrl" :alt="r.copywriter">-->
                 <img v-lazy="r.picUrl" :alt="r.copywriter">
         <p>{{ r.name }}</p>
@@ -26,6 +26,11 @@ export default {
       type: String,
       required: true,
       default: ''
+    }
+  },
+  methods: {
+    selectId (id) {
+      this.$emit('selectId', id)
     }
   }
 

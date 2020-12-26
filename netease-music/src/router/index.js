@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 // import Recommend from '../views/Recommend'
 // import Singer from '../views/Singer'
 // import Rank from '../views/Rank'
-// import Search from '../views/Search'
+// import Detail from '../views/Detail'
 // 按需加载的写法
 const Recommend = (resolve) => {
   import('../views/Recommend').then(module => {
@@ -26,12 +26,27 @@ const Search = (resolve) => {
     resolve(module)
   })
 }
+const Detail = (resolve) => {
+  import('../views/Detail').then(module => {
+    resolve(module)
+  })
+}
 
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/recommend' },
-  { path: '/recommend', component: Recommend },
+  {
+    path: '/recommend',
+    component: Recommend,
+    children: [
+      {
+        // 切记子路由之前不要加斜杠写成 /detail
+        path: 'detail',
+        component: Detail
+      }
+    ]
+  },
   { path: '/singers', component: Singer },
   { path: '/rank', component: Rank },
   { path: '/search', component: Search }

@@ -19,6 +19,12 @@
 <script>
 export default {
   name: 'SongList',
+  methods: {
+    selectId (id) {
+      // console.log(id)
+      this.$emit('selectId', id)
+    }
+  },
   props: {
     song_list: {
       type: Array,
@@ -56,11 +62,12 @@ export default {
     li {
       padding-left: 10px;
       margin-top: 10px;
+      padding-bottom: 10px;
       width: 100%;
       height: 150px;
       display: flex;
 
-      //border-bottom: 2px solid #cccccc;
+      border-bottom: 2px solid #cccccc;
       img {
         width: 150px;
         height: 150px;

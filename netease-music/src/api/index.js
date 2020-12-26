@@ -8,3 +8,5 @@ export const getPersonalized = () => Network.get('/personalized?limit=6')
 export const getNewAlbum = () => Network.get('/album/newest')
 
 export const getNewSongList = () => Network.get('/personalized/newsong')
+
+export const getPlayListDetail = (data) => Network.post('/playlist/detail', data)
