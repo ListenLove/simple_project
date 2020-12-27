@@ -9,4 +9,5 @@ export const getNewAlbum = () => Network.get('/album/newest')
 
 export const getNewSongList = () => Network.get('/personalized/newsong')
 
-export const getPlayListDetail = (data) => Network.post('/playlist/detail', data)
+export const getPlayListDetail = (data) => Network.get('/playlist/detail', data) // get 方法才能使用 query
+export const getAlbumListDetail = (data) => Network.get('/album', data)

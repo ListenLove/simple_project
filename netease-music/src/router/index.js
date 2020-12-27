@@ -42,7 +42,11 @@ const routes = [
     children: [
       {
         // 切记子路由之前不要加斜杠写成 /detail
-        path: 'detail',
+        path: 'detail/personalized',
+        component: Detail
+      },
+      {
+        path: 'detail/album',
         component: Detail
       }
     ]

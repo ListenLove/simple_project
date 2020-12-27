@@ -3,14 +3,17 @@
     <net-header></net-header>
     <net-tabbar></net-tabbar>
     <router-view></router-view>
+    <Player></Player>
   </div>
 </template>
 <script>
 import NetHeader from './components/header'
 import NetTabbar from './components/tabbar'
+import Player from '@/views/Player'
 
 export default {
-  components: { NetHeader, NetTabbar }
+  // eslint-disable-next-line vue/no-unused-components
+  components: { Player, NetHeader, NetTabbar }
 }
 
 </script>

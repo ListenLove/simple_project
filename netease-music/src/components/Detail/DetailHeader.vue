@@ -30,8 +30,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/mixin";
-@import "../assets/css/variable";
+@import "../../assets/css/mixin";
+@import "../../assets/css/variable";
 
 .subheader {
     @include bg_color();
@@ -57,12 +57,12 @@ export default {
     }
 
     .subheader-left {
-        $url: '../assets/images/back';
+        $url: '../../assets/images/back';
         @include bg_img($url);
     }
 
     .subheader-right {
-        $url: '../assets/images/more';
+        $url: '../../assets/images/more';
         @include bg_img($url);
     }
 }

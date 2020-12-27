@@ -25,8 +25,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "src/assets/css/mixin";
-@import "src/assets/css/variable";
+@import "../../assets/css/mixin";
+@import "../../assets/css/variable";
 
 ul.detail-bottom {
   @include font-color();
@@ -43,14 +43,14 @@ ul.detail-bottom {
     height: 100px;
     display: flex;
     align-items: center;
-    border-top-left-radius: 20%;
-    border-top-right-radius: 20%;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
 
     .bg-img {
       width: 78px;
       height: 78px;
       margin: 0 20px;
-      @include bg_img('../assets/images/small_play');
+      @include bg_img('../../assets/images/small_play');
     }
 
     div {

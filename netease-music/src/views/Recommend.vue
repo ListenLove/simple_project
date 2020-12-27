@@ -2,13 +2,16 @@
   <div class="recommend">
     <div class="core-container">
       <ScrollView>
-      <Banner :banners="banners"></Banner>
-      <Personalized :result="result" :title="'推荐歌单'" @selectId="selectSongDetail"></Personalized>
-      <Personalized :result="album" :title="'最新专辑'"></Personalized>
-      <SongList :song_list="songs_list"></SongList>
-    </ScrollView>
+        <Banner :banners="banners"></Banner>
+        <Personalized :result="result" :title="'推荐歌单'" @selectId="selectSongDetail"
+                      :typed="'personalized'"></Personalized>
+        <Personalized :result="album" :title="'最新专辑'" @selectId="selectSongDetail" :typed="'album'"></Personalized>
+        <SongList :song_list="songs_list"></SongList>
+      </ScrollView>
     </div>
-    <router-view></router-view>
+    <transition>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -31,7 +34,7 @@ export default {
     getRecommendBanner()
       .then(value => {
         // console.log(value)
-        this.result = value.result
+        this.banners = value.banners
       })
       .catch(reason => {
         console.log(reason)
@@ -70,12 +73,13 @@ export default {
     }
   },
   methods: {
-    selectSongDetail (id) {
+    selectSongDetail (id, typed) {
       // console.log(id)
       this.$router.push({
-        path: '/recommend/detail',
+        path: '/recommend/detail/' + typed,
         query: {
-          id: id // 查询 id 参数
+          id: id, // 查询 id 参数
+          typed: typed
         }
       })
     }
@@ -98,6 +102,32 @@ export default {
     height: 100%;
     overflow: hidden;
   }
+}
+
+.v-enter {
+  transform: translateX(100%);
+}
+
+.v-enter-to {
+  transform: translateX(0);
+
+}
+
+.v-enter-active {
+  transition: all 1s;
+}
+
+.v-leave {
+  transform: translateX(0);
+
+}
+
+.v-leave-to {
+  transform: translateX(100%);
+}
+
+.v-leave-active {
+  transition: all 1s;
 }
 
 </style>

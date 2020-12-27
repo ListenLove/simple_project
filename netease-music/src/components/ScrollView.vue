@@ -15,7 +15,8 @@ export default {
   mounted () {
     // 保证在DOM渲染完毕后初始化better-scroll
     this.scroll = new BScroll(this.$refs.wrapper, {
-      probeType: 3
+      probeType: 3,
+      autoEndDistance: true
       // disableTouch: false,
       // disableMouse: true
     })
