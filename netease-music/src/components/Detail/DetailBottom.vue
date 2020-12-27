@@ -4,7 +4,7 @@
       <div class="bg-img"></div>
       <div>播放全部</div>
     </li>
-    <li class="item" v-for="track in tracks" :key="track.id">
+    <li class="item" v-for="track in tracks" :key="track.id" @click.stop="selectSong">
       <h3>{{ track.name }}</h3>
       <p>{{ track.al.name }}-{{ track.ar[0].name }}</p>
     </li>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'DetailBottom',
   props: {
@@ -20,6 +21,21 @@ export default {
       required: true,
       default: () => []
     }
+  },
+  methods: {
+    ...mapActions([
+      'setFullScreen',
+      'setMiniPlayer'
+    ]),
+    selectSong () {
+      // this.$store.dispatch('setFullScreen', true)
+      this.setFullScreen(true)
+      this.setMiniPlayer(true)
+      console.log('set full screen')
+    }
+  },
+  computed: {
+
   }
 }
 </script>

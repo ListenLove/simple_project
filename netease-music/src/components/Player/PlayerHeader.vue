@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="header-left"></div>
+    <div class="header-left" @click="hiddenPlayerNormal"></div>
     <div class="header-title">
       <h3>演员</h3>
       <p>薛之谦️</p>
@@ -10,8 +10,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-  name: 'PlayerHeader'
+  name: 'PlayerHeader',
+  methods: {
+    ...mapActions([
+      'setPlayerNormal',
+      'setMiniPlayer'
+    ]),
+    hiddenPlayerNormal () {
+      this.setPlayerNormal(false)
+      this.setMiniPlayer(true)
+      console.log('close player normal')
+    }
+  }
 }
 </script>
 

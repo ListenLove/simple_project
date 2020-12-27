@@ -1,33 +1,39 @@
 <template>
-  <div class="play">
-    <PlayerHeader></PlayerHeader>
-    <PlayerMiddle></PlayerMiddle>
-    <PlayerBottom></PlayerBottom>
+  <div class="play" v-show="this.FullScreen">
+    <PlayNormal v-show="this.NormalPlayerShow"></PlayNormal>
+    <PlayerMini @isShow="isShow" v-show="this.MiniPlayerShow"></PlayerMini>
+    <PlayerList ref="playlist"></PlayerList>
   </div>
 </template>
 
 <script>
-import PlayerHeader from '@/components/Player/PlayerHeader'
-import PlayerMiddle from '@/components/Player/PlayerMiddle'
-import PlayerBottom from '@/components/Player/PlayerBottom'
+import PlayNormal from '@/components/Player/PlayerNormal'
+import PlayerMini from '@/components/Player/PlayerMini'
+import PlayerList from '@/components/Player/PlayerList'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'PlayView',
   components: {
-    PlayerBottom,
-    PlayerMiddle,
-    PlayerHeader
+    PlayerList,
+    PlayerMini,
+    // eslint-disable-next-line vue/no-unused-components
+    PlayNormal
+  },
+  methods: {
+    isShow () {
+      this.$refs.playlist.show()
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'FullScreen',
+      'NormalPlayerShow',
+      'MiniPlayerShow'
+    ])
   }
 }
 </script>
 
 <style scoped lang="scss">
-.play {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: pink;
-}
 </style>
