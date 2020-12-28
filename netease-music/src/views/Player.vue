@@ -17,7 +17,6 @@ export default {
   components: {
     PlayerList,
     PlayerMini,
-    // eslint-disable-next-line vue/no-unused-components
     PlayNormal
   },
   methods: {

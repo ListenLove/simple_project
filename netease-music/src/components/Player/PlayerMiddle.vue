@@ -4,7 +4,7 @@
           :auto-destroy="true"
           class="middle">
     <swiper-slide class="play-home">
-      <div class="cover">
+      <div class="cover play" ref="cover">
         <img src="https://p1.music.126.net/vgkXY8jcKXaXdZgkLKTzOw==/109951165561857649.jpg" alt="">
       </div>
     </swiper-slide>
@@ -71,6 +71,7 @@
 </template>
 <script>
 import { directive, Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import { mapGetters } from 'vuex'
 
 // import style (<= Swiper 5.x)
 import 'swiper/css/swiper.css'
@@ -99,6 +100,20 @@ export default {
         directives: {
           swiper: directive
         }
+      }
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'PlayerIsPlaying'
+    ])
+  },
+  watch: {
+    PlayerIsPlaying: function (newV) {
+      if (newV) {
+        this.$refs.cover.classList.add('pause')
+      } else {
+        this.$refs.cover.classList.remove('pause')
       }
     }
   }
@@ -142,6 +157,15 @@ export default {
     margin-top: 150px;
     margin-bottom: 280px;
     overflow: hidden;
+    animation: coverRotate 8s linear infinite;
+
+    &.play {
+      animation-play-state: paused;
+
+      &.pause {
+        animation-play-state: running;
+      }
+    }
 
     img {
       width: 100%;
@@ -150,6 +174,14 @@ export default {
   }
 }
 
+@keyframes coverRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
 <style lang="scss">
 /*

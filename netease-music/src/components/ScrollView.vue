@@ -21,11 +21,11 @@ export default {
       // disableMouse: true
     })
 
-    /* setTimeout(() => {
+    setTimeout(() => {
       console.log(this.scroll.maxScrollY)
       this.scroll.refresh()
       console.log(this.scroll.maxScrollY)
-    }, 5000) */
+    }, 5000)
     /*
     由于网络是异步加载的，在使用better-scroll 插件时，需要借助 MutationObserver
     观察后代姐弟啊、子节点的变化使用 scroll refresh 方法重新计算滚动距离

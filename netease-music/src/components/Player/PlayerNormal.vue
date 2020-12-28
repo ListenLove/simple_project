@@ -27,9 +27,11 @@ export default {
 
 <style scoped lang="scss">
 @import "src/assets/css/mixin";
+
 .play-normal {
   width: 100%;
   height: 100%;
+
   .play {
     position: fixed;
     top: 0;
@@ -46,13 +48,14 @@ export default {
     width: 100%;
     height: 100%;
     @include bg_sub_color();
+
     img {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       height: 100%;
-      filter: blur(10px) ;
+      filter: blur(10px);
       opacity: 1;
     }
   }

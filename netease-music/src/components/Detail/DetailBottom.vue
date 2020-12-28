@@ -28,10 +28,9 @@ export default {
       'setMiniPlayer'
     ]),
     selectSong () {
-      // this.$store.dispatch('setFullScreen', true)
       this.setFullScreen(true)
       this.setMiniPlayer(true)
-      console.log('set full screen')
+      // console.log('set full screen')
     }
   },
   computed: {
@@ -67,6 +66,11 @@ ul.detail-bottom {
       height: 78px;
       margin: 0 20px;
       @include bg_img('../../assets/images/small_play');
+
+      &.active {
+        @include bg_img('../../assets/images/small_pause');
+
+      }
     }
 
     div {

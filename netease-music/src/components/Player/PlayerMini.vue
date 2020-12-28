@@ -1,40 +1,87 @@
 <template>
-  <div class="mini">
-    <div class="wrapper">
-      <div class="left">
-        <div class="cover" @click="showPlayerNormal">
-          <img src="https://p1.music.126.net/WToRhQ-wpL9chpxDd2n-HA==/109951165560539447.jpg" alt="">
+  <transition
+    :css="false"
+    @enter="playerEnter"
+    @leave="playerLeave"
+  >
+    <div class="mini">
+      <div class="wrapper">
+        <div class="left">
+          <div class="cover play" @click="showPlayerNormal" ref="cover">
+            <img src="https://p1.music.126.net/WToRhQ-wpL9chpxDd2n-HA==/109951165560539447.jpg" alt="">
+          </div>
+          <div class="title">
+            <h3>演员</h3>
+            <p>薛之谦</p>
+          </div>
         </div>
-        <div class="title">
-          <h3>演员</h3>
-          <p>薛之谦</p>
+        <div class="right">
+          <div class="play" @click="play" ref="play"></div>
+          <div class="list" @click.stop="showList"></div>
         </div>
-      </div>
-      <div class="right">
-        <div class="play"></div>
-        <div class="list" @click.stop="showList"></div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
-
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import Velocity from 'velocity-animate'
+import 'velocity-animate/velocity.ui'
 
 export default {
   name: 'PlayerMini',
   methods: {
     ...mapActions([
       'setPlayerNormal',
-      'setMiniPlayer'
+      'setMiniPlayer',
+      'setIsPlaying',
+      'setPlayerListShow'
     ]),
     showList () {
-      console.log('show')
-      this.$emit('isShow')
+      this.setPlayerListShow(true)
     },
     showPlayerNormal () {
       this.setPlayerNormal(true)
       this.setMiniPlayer(false)
+    },
+    // 播放器进入时动画
+    playerEnter (el, done) {
+      Velocity(
+        el,
+        'transition.slideUpBigIn',
+        { duration: 300 },
+        function () {
+          done()
+        })
+    },
+    // 播放器关闭时动画
+    playerLeave (el, done) {
+      Velocity(el,
+        'transition.slideDownOut',
+        { duration: 300 },
+        function () {
+          done()
+        })
+    },
+    // 点击播放按钮
+    play () {
+      this.setIsPlaying(!this.PlayerIsPlaying)
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'PlayerIsPlaying'
+    ])
+  },
+  watch: {
+    PlayerIsPlaying: function (newV, oldV) {
+      if (newV) {
+        this.$refs.play.classList.add('pause')
+        this.$refs.cover.classList.add('pause')
+      } else {
+        this.$refs.play.classList.remove('pause')
+        this.$refs.cover.classList.remove('pause')
+      }
     }
   }
 }
@@ -69,6 +116,15 @@ export default {
         height: 120px;
         border-radius: 50%;
         overflow: hidden;
+        animation: coverRotate 8s linear infinite;
+
+        &.play {
+          animation-play-state: paused;
+
+          &.pause {
+            animation-play-state: running;
+          }
+        }
 
         img {
           width: 100%;
@@ -102,7 +158,11 @@ export default {
         height: 100px;
 
         &.play {
-          @include bg_img('../../assets/images/play')
+          @include bg_img('../../assets/images/play');
+
+          &.pause {
+            @include bg_img('../../assets/images/pause')
+          }
         }
 
         &.list {
@@ -115,4 +175,12 @@ export default {
   }
 }
 
+@keyframes coverRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
