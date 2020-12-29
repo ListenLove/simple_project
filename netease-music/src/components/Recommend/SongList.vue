@@ -25,18 +25,21 @@ export default {
       'setFullScreen',
       'setMiniPlayer',
       'setSongDetail',
-      'setPlayerNormal'
+      'setPlayerNormal',
+      'setIsPlaying'
     ]),
     selectId (id) {
       this.$emit('selectId', id)
     },
-    selectSong (id) {
-      this.setSongDetail(id)
+    async selectSong (id) {
+      await this.setSongDetail(id)
       this.setMiniPlayer(true)
+      this.setIsPlaying(true)
     },
-    selectSongDetail (id) {
-      this.setSongDetail(id)
+    async selectSongDetail (id) {
+      await this.setSongDetail(id)
       this.setPlayerNormal(true)
+      this.setIsPlaying(true)
     }
   },
   props: {

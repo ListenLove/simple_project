@@ -10,5 +10,6 @@ export default {
   songs: [],
   currentSong: {},
   currentIndex: 0,
-  songLyric: {}
+  songLyric: {},
+  currentTime: 0
 }

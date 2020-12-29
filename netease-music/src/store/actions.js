@@ -8,7 +8,8 @@ import {
   SET_SONG_DETAIL,
   SET_CURRENT_LYRIC,
   DEL_SONG_FROM_SONG_LIST,
-  SET_CURRENT_INDEX
+  SET_CURRENT_INDEX,
+  SET_CURRENT_TIME
 } from '@/store/mutations-type'
 import { getSongDetail, getSongLyric, getSongURL } from '@/api'
 import { lyricParser } from '@/store/modeType'
@@ -69,5 +70,8 @@ export default {
   },
   setCurrentIndex ({ commit }, index) {
     commit(SET_CURRENT_INDEX, index)
+  },
+  setCurrentTime ({ commit }, curTime) {
+    commit(SET_CURRENT_TIME, curTime)
   }
 }

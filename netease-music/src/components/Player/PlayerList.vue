@@ -115,15 +115,18 @@ export default {
     },
     selectSong (index) {
       if (index === this.currentIndex) {
-        if (this.$refs.item_ul.classList.contains('pause')) {
+        if (this.PlayerIsPlaying) {
           this.$refs.item_ul.classList.remove('pause')
+          this.setIsPlaying(false)
         } else {
           this.$refs.item_ul.classList.add('pause')
+          this.setIsPlaying(true)
         }
       } else {
         this.setCurrentIndex(index)
         this.$refs.item_ul.classList.remove('pause')
         this.$refs.item_ul.classList.add('pause')
+        this.setIsPlaying(true)
       }
     }
   },

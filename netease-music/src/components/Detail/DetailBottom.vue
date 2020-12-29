@@ -13,6 +13,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'DetailBottom',
   props: {
@@ -26,20 +27,23 @@ export default {
     ...mapActions([
       'setFullScreen',
       'setMiniPlayer',
-      'setSongDetail'
+      'setSongDetail',
+      'setIsPlaying'
     ]),
-    selectSong (id) {
+    async selectSong (id) {
       this.setFullScreen(true)
       this.setMiniPlayer(true)
       // console.log('set full screen')
-      this.setSongDetail(id)
+      await this.setSongDetail(id)
+      this.setIsPlaying(true)
     },
-    playAll () {
+    async playAll () {
       this.setMiniPlayer(true)
       const ids = this.tracks.map(function (value) {
         return value.id
       })
-      this.setSongDetail(ids)
+      await this.setSongDetail(ids)
+      this.setIsPlaying(true)
     }
   },
   computed: {
@@ -58,6 +62,7 @@ ul.detail-bottom {
   @include font-color();
   width: 100%;
   padding-bottom: 150px;
+
   li {
     @include bg_sub_color();
     border: 2px solid #cccccc;

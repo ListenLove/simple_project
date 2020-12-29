@@ -1,13 +1,13 @@
 <template>
   <div class="player-bottom">
     <div class="top">
-      <span>00:00</span>
-      <div class="progress-bg">
-        <div class="progress-line">
+      <span ref="currentTimeSpan">00:00</span>
+      <div class="progress-bg" @click="progressClick">
+        <div class="progress-line" ref="progressLine" >
           <div class="progress-dot"></div>
         </div>
       </div>
-      <span>00:00</span>
+      <span ref="durationSpan">00:00</span>
     </div>
     <div class="bottom">
       <div class="mode loop" ref="mode" @click="changeMode"></div>
@@ -29,8 +29,17 @@ export default {
     ...mapActions([
       'setIsPlaying',
       'setModeType',
-      'setCurrentIndex'
+      'setCurrentIndex',
+      'setCurrentTime'
     ]),
+    parseTime (time) {
+      const seconds = parseInt(time)
+      let min = Math.floor(seconds / 60)
+      min = min < 10 ? '0' + min : min
+      let second = seconds % 60
+      second = second < 10 ? '0' + second : second
+      return min + ':' + second // 返回 03:10, 02:01的形式
+    },
     play () {
       this.setIsPlaying(!this.PlayerIsPlaying)
     },
@@ -51,9 +60,19 @@ export default {
     },
     prevSong () {
       this.setCurrentIndex(this.currentIndex - 1)
+      this.setIsPlaying(true)
     },
     nextSong () {
       this.setCurrentIndex(this.currentIndex + 1)
+      this.setIsPlaying(true)
+    },
+    progressClick (e) {
+      const offsetLeft = e.target.offsetLeft
+      const offsetWidth = e.target.offsetWidth
+      const clickX = e.pageX
+      const value = (clickX - offsetLeft) / offsetWidth
+      this.$refs.progressLine.style.width = 100 * value + '%'
+      this.setCurrentTime(value * this.songDuration)
     }
   },
   computed: {
@@ -64,7 +83,7 @@ export default {
     ])
   },
   watch: {
-    PlayerIsPlaying: function (newV) {
+    PlayerIsPlaying (newV) {
       if (newV) {
         this.$refs.play.classList.add('pause')
       } else {
@@ -85,6 +104,28 @@ export default {
         this.$refs.mode.classList.remove('random')
         this.$refs.mode.classList.add('loop')
       }
+    },
+    songDuration (newV) {
+      // eslint-disable-next-line vue/no-mutating-props
+      this.songDuration = newV
+      this.$refs.durationSpan.innerHTML = this.parseTime(this.songDuration)
+    },
+    songCurrentTime (newV) {
+      // eslint-disable-next-line vue/no-mutating-props
+      this.songCurrentTime = newV
+      this.$refs.currentTimeSpan.innerHTML = this.parseTime(this.songCurrentTime)
+      const width = (this.songCurrentTime / this.songDuration) * 100
+      this.$refs.progressLine.style.width = width + '%'
+    }
+  },
+  props: {
+    songDuration: {
+      type: Number,
+      default: 0
+    },
+    songCurrentTime: {
+      type: Number,
+      default: 0
     }
   }
 }
@@ -119,19 +160,19 @@ export default {
       width: 80%;
       height: 10px;
       background-color: #FFFFFF;
-      position: relative;
 
       .progress-line {
         border-radius: 5px;
         background-color: #999999;
-        width: 50%;
+        width: 0;
         height: 100%;
+        position: relative;
 
         .progress-dot {
           position: absolute;
           top: 50%;
           transform: translate(-50%, -50%);
-          left: 50%;
+          left: 100%;
           width: 24px;
           height: 24px;
           margin: 0 auto;
@@ -155,16 +196,16 @@ export default {
       &.mode {
         //@include bg_img('../../assets/images/loop')
         &.loop {
-            @include bg_img('../../assets/images/loop');
-          }
+          @include bg_img('../../assets/images/loop');
+        }
 
-          &.one {
-            @include bg_img('../../assets/images/one');
-          }
+        &.one {
+          @include bg_img('../../assets/images/one');
+        }
 
-          &.random {
-            @include bg_img('../../assets/images/shuffle');
-          }
+        &.random {
+          @include bg_img('../../assets/images/shuffle');
+        }
       }
 
       &.prev {

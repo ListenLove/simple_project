@@ -3,7 +3,7 @@
     <div class="play">
       <PlayerHeader></PlayerHeader>
       <PlayerMiddle></PlayerMiddle>
-      <PlayerBottom></PlayerBottom>
+      <PlayerBottom :songDuration="songDuration" :songCurrentTime="songCurrentTime"></PlayerBottom>
     </div>
     <div class="bg"><img :src="this.currentSong.picUrl" alt=""></div>
     <div class="mask"></div>
@@ -27,6 +27,16 @@ export default {
     ...mapGetters([
       'currentSong'
     ])
+  },
+  props: {
+    songDuration: {
+      type: Number,
+      default: 0
+    },
+    songCurrentTime: {
+      type: Number,
+      default: 0
+    }
   }
 }
 </script>
