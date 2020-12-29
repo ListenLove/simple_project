@@ -1,10 +1,10 @@
 <template>
   <ul class="detail-bottom">
     <li class="detail-bottom-top">
-      <div class="bg-img"></div>
+      <div class="bg-img" @click="playAll"></div>
       <div>播放全部</div>
     </li>
-    <li class="item" v-for="track in tracks" :key="track.id" @click.stop="selectSong">
+    <li class="item" v-for="track in tracks" :key="track.id" @click.stop="selectSong(track.id)">
       <h3>{{ track.name }}</h3>
       <p>{{ track.al.name }}-{{ track.ar[0].name }}</p>
     </li>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'DetailBottom',
   props: {
@@ -25,16 +25,27 @@ export default {
   methods: {
     ...mapActions([
       'setFullScreen',
-      'setMiniPlayer'
+      'setMiniPlayer',
+      'setSongDetail'
     ]),
-    selectSong () {
+    selectSong (id) {
       this.setFullScreen(true)
       this.setMiniPlayer(true)
       // console.log('set full screen')
+      this.setSongDetail(id)
+    },
+    playAll () {
+      this.setMiniPlayer(true)
+      const ids = this.tracks.map(function (value) {
+        return value.id
+      })
+      this.setSongDetail(ids)
     }
   },
   computed: {
-
+    ...mapGetters([
+      'currentSong'
+    ])
   }
 }
 </script>
@@ -46,7 +57,7 @@ export default {
 ul.detail-bottom {
   @include font-color();
   width: 100%;
-
+  padding-bottom: 150px;
   li {
     @include bg_sub_color();
     border: 2px solid #cccccc;

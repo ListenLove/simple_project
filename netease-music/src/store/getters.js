@@ -16,5 +16,26 @@ export default {
   },
   PlayerListIsShow (state) {
     return state.isShowPlayerList
+  },
+  Songs (state) {
+    return state.songs
+  },
+  currentSong (state) {
+    if (state.songs.length === 0) {
+      return {
+        name: '',
+        singer: '',
+        picUrl: null,
+        url: '',
+        id: null
+      }
+    }
+    return state.songs[state.currentIndex]
+  },
+  currentLyric (state) {
+    return state.songLyric
+  },
+  currentIndex (state) {
+    return state.currentIndex
   }
 }

@@ -9,41 +9,21 @@
           <div class="play-mode loop" @click="changeMode" ref="mode"></div>
           <p class="play-desc" v-if="this.PlayMode === 0">顺序播放</p>
           <p class="play-desc" v-else-if="this.PlayMode === 1">单曲循环</p>
-          <p class="play-desc" v-else-if="this.PlayMode === 2" >随机播放</p>
+          <p class="play-desc" v-else-if="this.PlayMode === 2">随机播放</p>
         </div>
-        <p class="top-right"></p>
+        <p class="top-right" @click="delAllSongs"></p>
       </div>
       <div class="middle">
-        <ScrollView>
-          <ul>
-            <li class="item">
+        <ScrollView ref="scroll_song_list">
+          <ul ref="item_ul">
+            <li class="item" v-for="(value, index) in Songs" :key="index" @click.stop="selectSong(index)">
               <div class="item-left">
-                <div class="play-button"></div>
-                <p class="song_name">演员</p>
+                <div class="play-button" v-show="currentIndex === index"></div>
+                <p class="song_name">{{ value.name }}</p>
               </div>
               <div class="item-right">
                 <div class="un-favorite"></div>
-                <div class="small_close"></div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="item-left">
-                <div class="play-button"></div>
-                <p class="song_name">演员</p>
-              </div>
-              <div class="item-right">
-                <div class="un-favorite"></div>
-                <div class="small_close"></div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="item-left">
-                <div class="play-button"></div>
-                <p class="song_name">演员</p>
-              </div>
-              <div class="item-right">
-                <div class="un-favorite"></div>
-                <div class="small_close"></div>
+                <div class="small_close" @click.stop="delSong(index)"></div>
               </div>
             </li>
           </ul>
@@ -72,13 +52,20 @@ export default {
   computed: {
     ...mapGetters([
       'PlayMode',
-      'PlayerListIsShow'
+      'PlayerListIsShow',
+      'Songs',
+      'currentIndex',
+      'PlayerIsPlaying'
     ])
   },
   methods: {
     ...mapActions([
       'setModeType',
-      'setPlayerListShow'
+      'setPlayerListShow',
+      'delSongFromSongList',
+      'setSongDetail',
+      'setIsPlaying',
+      'setCurrentIndex'
     ]),
     show () {
       this.isShow = true
@@ -119,6 +106,25 @@ export default {
         this.$refs.mode.classList.remove('random')
         this.$refs.mode.classList.add('loop')
       }
+    },
+    delAllSongs () {
+      this.delSongFromSongList()
+    },
+    delSong (index) {
+      this.delSongFromSongList(index)
+    },
+    selectSong (index) {
+      if (index === this.currentIndex) {
+        if (this.$refs.item_ul.classList.contains('pause')) {
+          this.$refs.item_ul.classList.remove('pause')
+        } else {
+          this.$refs.item_ul.classList.add('pause')
+        }
+      } else {
+        this.setCurrentIndex(index)
+        this.$refs.item_ul.classList.remove('pause')
+        this.$refs.item_ul.classList.add('pause')
+      }
     }
   },
   watch: {
@@ -136,6 +142,11 @@ export default {
         this.$refs.mode.classList.remove('random')
         this.$refs.mode.classList.add('loop')
       }
+    },
+    PlayerListIsShow (newV) {
+      if (newV) {
+        this.$refs.scroll_song_list.refresh()
+      }
     }
   }
 }
@@ -149,6 +160,7 @@ export default {
 .player-list {
   width: 100%;
   position: fixed;
+  top: 700px;
   bottom: 0;
   left: 0;
   @include bg_sub_color();
@@ -197,7 +209,29 @@ export default {
   }
 
   .middle {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+
+    ul {
+      li {
+        & .play-button {
+          width: 80px;
+          height: 80px;
+          @include bg_img('../../assets/images/small_play');
+        }
+      }
+
+      &.pause {
+        li {
+          & .play-button {
+            width: 80px;
+            height: 80px;
+            @include bg_img('../../assets/images/small_pause');
+          }
+        }
+      }
+    }
 
     .item {
       display: flex;
@@ -211,12 +245,6 @@ export default {
         display: flex;
         align-items: center;
         margin-left: 20px;
-
-        .play-button {
-          width: 80px;
-          height: 80px;
-          @include bg_img('../../assets/images/small_play');
-        }
 
         .song_name {
           margin-left: 20px;
@@ -243,10 +271,18 @@ export default {
           @include bg_img('../../assets/images/small_close');
         }
       }
+
+      &:last-of-type {
+        // 列表最后一首歌应当高过关闭按钮
+        padding-bottom: 200px;
+      }
     }
   }
 
   .bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
     height: 100px;
     width: 100%;
     display: block;

@@ -1,10 +1,14 @@
 import { modeType } from '@/store/modeType'
 
 export default {
-  isFullScreen: false,
+  isFullScreen: true,
   isPlayerNormalShow: false,
   isMiniPlayerShow: false,
   isShowPlayerList: false,
   isPlaying: false,
-  playMode: modeType.loop
+  playMode: modeType.loop,
+  songs: [],
+  currentSong: {},
+  currentIndex: 0,
+  songLyric: {}
 }

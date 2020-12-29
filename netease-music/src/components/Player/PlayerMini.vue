@@ -8,11 +8,11 @@
       <div class="wrapper">
         <div class="left">
           <div class="cover play" @click="showPlayerNormal" ref="cover">
-            <img src="https://p1.music.126.net/WToRhQ-wpL9chpxDd2n-HA==/109951165560539447.jpg" alt="">
+            <img :src="currentSong.picUrl" alt="">
           </div>
           <div class="title">
-            <h3>演员</h3>
-            <p>薛之谦</p>
+            <h3>{{ this.currentSong.name }}</h3>
+            <p>{{ this.currentSong.singer }}</p>
           </div>
         </div>
         <div class="right">
@@ -70,7 +70,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'PlayerIsPlaying'
+      'PlayerIsPlaying',
+      'currentSong'
     ])
   },
   watch: {

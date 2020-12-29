@@ -4,7 +4,12 @@ import {
   CHANGE_MINI_PLAYER_SHOW,
   CHANGE_PLAYING,
   MODE_TYPE,
-  CHANGE_PLAYER_LIST_SHOW
+  CHANGE_PLAYER_LIST_SHOW,
+  SET_SONG_DETAIL,
+  SET_CURRENT_SONG,
+  SET_CURRENT_LYRIC,
+  DEL_SONG_FROM_SONG_LIST,
+  SET_CURRENT_INDEX
 } from '@/store/mutations-type'
 
 export default {
@@ -18,9 +23,19 @@ export default {
   },
   [CHANGE_PLAYER_NORMAL_SHOW] (state, flag) {
     state.isPlayerNormalShow = flag
+    // 打开全屏播放器，mini 和 歌曲列表不显示
+    if (flag) {
+      state.isShowPlayerList = false
+      state.isMiniPlayerShow = false
+    }
   },
   [CHANGE_MINI_PLAYER_SHOW] (state, flag) {
     state.isMiniPlayerShow = flag
+    // 打开mini 播放器，歌曲列表和全屏播放器不显示
+    if (flag) {
+      state.isPlayerNormalShow = false
+      state.isShowPlayerList = false
+    }
   },
   [CHANGE_PLAYER_LIST_SHOW] (state, flag) {
     state.isShowPlayerList = flag
@@ -30,5 +45,43 @@ export default {
   },
   [MODE_TYPE] (state, flag) {
     state.playMode = flag
+  },
+  [SET_SONG_DETAIL] (state, list) {
+    state.songs = list
+  },
+  [SET_CURRENT_SONG] (state, song) {
+    state.currentSong = song
+  },
+  [SET_CURRENT_LYRIC] (state, lyric) {
+    state.songLyric = lyric
+  },
+  /**
+   * 从歌曲列表中删除歌曲
+   * @param state
+   * @param index 不传参数时删除歌曲列表中的所有歌曲，传递整型时删除对应index的歌曲
+   */
+  [DEL_SONG_FROM_SONG_LIST] (state, index) {
+    if (index === undefined) {
+      state.songs = []
+    } else {
+      state.songs.splice(index, 1)
+    }
+    // 删除播放队列位于当前播放歌曲之前的歌曲应当使当前播放队列的 index 前进一位
+    if (index < state.currentIndex) {
+      state.currentIndex--
+    }
+    if (state.songs.length === 0) {
+      state.isShowPlayerList = false
+      state.isPlayerNormalShow = false
+      state.isMiniPlayerShow = false
+    }
+  },
+  [SET_CURRENT_INDEX] (state, index) {
+    if (index < 0) {
+      index = state.songs.length - 1
+    } else if (index >= state.songs.length - 1) {
+      index = 0
+    }
+    state.currentIndex = index
   }
 }

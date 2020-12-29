@@ -11,9 +11,9 @@
     </div>
     <div class="bottom">
       <div class="mode loop" ref="mode" @click="changeMode"></div>
-      <div class="prev" ></div>
+      <div class="prev" @click="prevSong"></div>
       <div class="play" @click="play" ref="play"></div>
-      <div class="next"></div>
+      <div class="next" @click="nextSong"></div>
       <div class="un-favorite"></div>
     </div>
   </div>
@@ -28,7 +28,8 @@ export default {
   methods: {
     ...mapActions([
       'setIsPlaying',
-      'setModeType'
+      'setModeType',
+      'setCurrentIndex'
     ]),
     play () {
       this.setIsPlaying(!this.PlayerIsPlaying)
@@ -47,12 +48,19 @@ export default {
         this.$refs.mode.classList.remove('random')
         this.$refs.mode.classList.add('loop')
       }
+    },
+    prevSong () {
+      this.setCurrentIndex(this.currentIndex - 1)
+    },
+    nextSong () {
+      this.setCurrentIndex(this.currentIndex + 1)
     }
   },
   computed: {
     ...mapGetters([
       'PlayerIsPlaying',
-      'PlayMode'
+      'PlayMode',
+      'currentIndex'
     ])
   },
   watch: {
@@ -87,6 +95,8 @@ export default {
 @import "src/assets/css/variable";
 
 .player-bottom {
+  position: fixed;
+  bottom: 30px;
   width: 100%;
   margin-top: 20px;
 

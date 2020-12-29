@@ -4,10 +4,10 @@
       <h3>最新音乐</h3>
     </div>
     <ul class="song-list">
-      <li v-for="item in song_list" :key="item.id" @click.stop="selectSong">
+      <li v-for="item in song_list" :key="item.id" >
 <!--        <img :src="item.picUrl" alt="">-->
-         <img v-lazy="item.picUrl" alt="">
-        <div class="desc">
+         <img v-lazy="item.picUrl" alt="" @click="selectSongDetail(item.id)">
+        <div class="desc" @click.stop="selectSong(item.id)">
           <h3>{{ item.song.name }}</h3>
           <p>{{ item.song.artists[0].name }}</p>
         </div>
@@ -23,16 +23,20 @@ export default {
   methods: {
     ...mapActions([
       'setFullScreen',
-      'setMiniPlayer'
+      'setMiniPlayer',
+      'setSongDetail',
+      'setPlayerNormal'
     ]),
     selectId (id) {
-      // console.log(id)
       this.$emit('selectId', id)
     },
-    selectSong () {
-      this.setFullScreen(true)
+    selectSong (id) {
+      this.setSongDetail(id)
       this.setMiniPlayer(true)
-      // console.log('set full screen')
+    },
+    selectSongDetail (id) {
+      this.setSongDetail(id)
+      this.setPlayerNormal(true)
     }
   },
   props: {

@@ -3,6 +3,7 @@
     <PlayNormal v-show="this.NormalPlayerShow"></PlayNormal>
     <PlayerMini @isShow="isShow" v-show="this.MiniPlayerShow"></PlayerMini>
     <PlayerList ref="playlist"></PlayerList>
+    <audio :src="currentSong.url"></audio>
   </div>
 </template>
 
@@ -28,7 +29,8 @@ export default {
     ...mapGetters([
       'FullScreen',
       'NormalPlayerShow',
-      'MiniPlayerShow'
+      'MiniPlayerShow',
+      'currentSong'
     ])
   }
 }

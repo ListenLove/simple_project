@@ -5,73 +5,22 @@
           class="middle">
     <swiper-slide class="play-home">
       <div class="cover play" ref="cover">
-        <img src="https://p1.music.126.net/vgkXY8jcKXaXdZgkLKTzOw==/109951165561857649.jpg" alt="">
+        <img :src="currentSong.picUrl" alt="">
       </div>
     </swiper-slide>
-    <swiper-slide>
-      <div class="lyric">
-        <ScrollView>
+    <swiper-slide class="lyric">
+          <ScrollView ref="scroll_lyric">
           <ul>
-            <li>我是第1个li</li>
-            <li>我是第2个li</li>
-            <li>我是第3个li</li>
-            <li>我是第4个li</li>
-            <li>我是第5个li</li>
-            <li>我是第6个li</li>
-            <li>我是第7个li</li>
-            <li>我是第8个li</li>
-            <li>我是第9个li</li>
-            <li>我是第10个li</li>
-            <li>我是第11个li</li>
-            <li>我是第12个li</li>
-            <li>我是第13个li</li>
-            <li>我是第14个li</li>
-            <li>我是第15个li</li>
-            <li>我是第16个li</li>
-            <li>我是第17个li</li>
-            <li>我是第18个li</li>
-            <li>我是第19个li</li>
-            <li>我是第20个li</li>
-            <li>我是第21个li</li>
-            <li>我是第22个li</li>
-            <li>我是第23个li</li>
-            <li>我是第24个li</li>
-            <li>我是第25个li</li>
-            <li>我是第26个li</li>
-            <li>我是第27个li</li>
-            <li>我是第28个li</li>
-            <li>我是第29个li</li>
-            <li>我是第30个li</li>
-            <li>我是第31个li</li>
-            <li>我是第32个li</li>
-            <li>我是第33个li</li>
-            <li>我是第34个li</li>
-            <li>我是第35个li</li>
-            <li>我是第36个li</li>
-            <li>我是第37个li</li>
-            <li>我是第38个li</li>
-            <li>我是第39个li</li>
-            <li>我是第40个li</li>
-            <li>我是第41个li</li>
-            <li>我是第42个li</li>
-            <li>我是第43个li</li>
-            <li>我是第44个li</li>
-            <li>我是第45个li</li>
-            <li>我是第46个li</li>
-            <li>我是第47个li</li>
-            <li>我是第48个li</li>
-            <li>我是第49个li</li>
-            <li>我是第50个li</li>
+            <li v-for="(value, index) in currentLyric" :key="index">{{ value }}</li>
           </ul>
         </ScrollView>
-      </div>
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
 </template>
 <script>
 import { directive, Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 // import style (<= Swiper 5.x)
 import 'swiper/css/swiper.css'
@@ -105,7 +54,9 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'PlayerIsPlaying'
+      'PlayerIsPlaying',
+      'currentSong',
+      'currentLyric'
     ])
   },
   watch: {
@@ -115,7 +66,27 @@ export default {
       } else {
         this.$refs.cover.classList.remove('pause')
       }
+    },
+    currentSong (newV, oldV) {
+      if (!newV.id) return
+      this.setSongLyric(newV.id)
+    },
+    currentLyric (newV, oldV) {
+      if (newV) {
+        const observer = new MutationObserver(() => {
+          this.$refs.scroll_lyric.refresh10()
+        })
+        observer.observe(this.$refs.scroll_lyric.$el, {
+          childList: true,
+          subtree: true
+        })
+      }
     }
+  },
+  methods: {
+    ...mapActions([
+      'setSongLyric'
+    ])
   }
 }
 </script>
@@ -124,16 +95,16 @@ export default {
 @import "src/assets/css/mixin";
 
 .middle {
-  position: relative;
+  position: fixed;
+  top: 120px;
+  bottom: 200px;
   left: 0;
   right: 0;
+  overflow: hidden;
 
   .lyric {
-    position: fixed;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-
     & li {
       list-style: none;
       @include font_size($font_medium);
@@ -147,30 +118,30 @@ export default {
       }
     }
   }
+}
 
-  .cover {
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    border: 54px solid #FFFFFF;
-    margin: 0 auto;
-    margin-top: 150px;
-    margin-bottom: 280px;
-    overflow: hidden;
-    animation: coverRotate 8s linear infinite;
+.cover {
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  border: 54px solid #FFFFFF;
+  margin: 0 auto;
+  margin-top: 150px;
+  margin-bottom: 280px;
+  overflow: hidden;
+  animation: coverRotate 8s linear infinite;
 
-    &.play {
-      animation-play-state: paused;
+  &.play {
+    animation-play-state: paused;
 
-      &.pause {
-        animation-play-state: running;
-      }
+    &.pause {
+      animation-play-state: running;
     }
+  }
 
-    img {
-      width: 100%;
-      height: 100%;
-    }
+  img {
+    width: 100%;
+    height: 100%;
   }
 }
 

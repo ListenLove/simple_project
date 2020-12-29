@@ -10,7 +10,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   // 解决IScroll拖拽卡顿问题
-  touch-action: none;
+  touch-action: nonet;
 }
 
 body {

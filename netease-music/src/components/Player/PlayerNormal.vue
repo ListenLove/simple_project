@@ -5,7 +5,8 @@
       <PlayerMiddle></PlayerMiddle>
       <PlayerBottom></PlayerBottom>
     </div>
-    <div class="bg"><img src="https://p1.music.126.net/vgkXY8jcKXaXdZgkLKTzOw==/109951165561857649.jpg" alt=""></div>
+    <div class="bg"><img :src="this.currentSong.picUrl" alt=""></div>
+    <div class="mask"></div>
   </div>
 
 </template>
@@ -14,13 +15,18 @@
 import PlayerHeader from './PlayerHeader'
 import PlayerMiddle from './PlayerMiddle'
 import PlayerBottom from './PlayerBottom'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'PlayNormal',
   components: {
     PlayerBottom,
     PlayerMiddle,
     PlayerHeader
+  },
+  computed: {
+    ...mapGetters([
+      'currentSong'
+    ])
   }
 }
 </script>
@@ -58,6 +64,16 @@ export default {
       filter: blur(10px);
       opacity: 1;
     }
+  }
+  // 背景变暗
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @include bg_sub_color();
+    opacity: 0.1;
   }
 }
 </style>

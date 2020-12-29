@@ -2,15 +2,16 @@
   <div class="header">
     <div class="header-left" @click="hiddenPlayerNormal"></div>
     <div class="header-title">
-      <h3>演员</h3>
-      <p>薛之谦️</p>
+      <h3>{{ currentSong.name }}</h3>
+      <p>{{ currentSong.singer }}</p>
     </div>
     <div class="header-right"></div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'PlayerHeader',
   methods: {
@@ -23,6 +24,11 @@ export default {
       this.setMiniPlayer(true)
       console.log('close player normal')
     }
+  },
+  computed: {
+    ...mapGetters([
+      'currentSong'
+    ])
   }
 }
 </script>
