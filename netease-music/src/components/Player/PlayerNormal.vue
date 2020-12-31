@@ -2,7 +2,7 @@
   <div class="play-normal">
     <div class="play">
       <PlayerHeader></PlayerHeader>
-      <PlayerMiddle></PlayerMiddle>
+      <PlayerMiddle :songCurrentTime="songCurrentTime"></PlayerMiddle>
       <PlayerBottom :songDuration="songDuration" :songCurrentTime="songCurrentTime"></PlayerBottom>
     </div>
     <div class="bg"><img :src="this.currentSong.picUrl" alt=""></div>

@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper" ref="wrapper">
-      <div class="content">
+      <div class="content" ref="ul">
         <slot></slot>
       </div>
     <!--    <slot></slot>-->
@@ -20,27 +20,7 @@ export default {
       // disableTouch: false,
       // disableMouse: true
     })
-    this.$nextTick(() => {
-      this.scroll.refresh()
-    })
-
-    /* setTimeout(() => {
-      console.log(this.scroll.maxScrollY)
-      this.scroll.refresh()
-      console.log(this.scroll.maxScrollY)
-    }, 5000) */
-    /*
-    由于网络是异步加载的，在使用better-scroll 插件时，需要借助 MutationObserver
-    观察后代姐弟啊、子节点的变化使用 scroll refresh 方法重新计算滚动距离
-    */
-    const observer = new MutationObserver((mutations, observer) => {
-      this.scroll.refresh()
-    })
-    const config = {
-      childList: true, // 监听子节点的变化
-      subtree: true // 监听后代节点的变化
-    }
-    observer.observe(this.$refs.wrapper, config)
+    this.refresh()
   },
   methods: {
     // 定义监听 scroll 滚动的事件，将在Y轴上滚动的运动坐标传递给回调函数
@@ -51,14 +31,30 @@ export default {
     },
     refresh () {
       setTimeout(() => {
-        this.scroll.refresh()
+        // this.scroll.refresh()
+        const observer = new MutationObserver(() => {
+          this.scroll.refresh()
+        })
+        const config = {
+          childList: true, // 监听子节点的变化
+          subtree: true, // 监听后代节点的变化
+          attributeFilter: ['height', 'offsetHeight'] // 观察特定属性
+        }
+        observer.observe(this.$refs.ul, config)
       }, 100)
     },
     refresh10 () {
       setTimeout(() => {
         this.scroll.refresh()
         console.log('加载完成')
-      }, 3000)
+      }, 300)
+    },
+    scrollTo (x, y, time) {
+      this.scroll.scrollTo(x, y, time)
+      // 执行完滚动后，禁止回弹
+      setTimeout(() => {
+        this.scroll.stop()
+      }, time)
     }
   }
 }

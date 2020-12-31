@@ -22,7 +22,9 @@
                 <p class="song_name">{{ value.name }}</p>
               </div>
               <div class="item-right">
-                <div class="un-favorite"></div>
+                <div class="un-favorite" @click.stop='changeFavorite(value)'
+                     :class="{'favorite': isFavorite(value) }"
+                ></div>
                 <div class="small_close" @click.stop="delSong(index)"></div>
               </div>
             </li>
@@ -55,7 +57,8 @@ export default {
       'PlayerListIsShow',
       'Songs',
       'currentIndex',
-      'PlayerIsPlaying'
+      'PlayerIsPlaying',
+      'favoriteList'
     ])
   },
   methods: {
@@ -65,7 +68,9 @@ export default {
       'delSongFromSongList',
       'setSongDetail',
       'setIsPlaying',
-      'setCurrentIndex'
+      'setCurrentIndex',
+      'addToFavoriteList',
+      'removeFromFavoriteList'
     ]),
     show () {
       this.isShow = true
@@ -128,6 +133,21 @@ export default {
         this.$refs.item_ul.classList.add('pause')
         this.setIsPlaying(true)
       }
+    },
+    changeFavorite (value) {
+      const result = this.favoriteList.find(val => {
+        if (val.id === value.id) return true
+      })
+      if (result) {
+        this.removeFromFavoriteList(value)
+      } else {
+        this.addToFavoriteList(value)
+      }
+    },
+    isFavorite (value) {
+      return this.favoriteList.find(val => {
+        if (val.id === value.id) return true
+      })
     }
   },
   watch: {
@@ -150,7 +170,16 @@ export default {
       if (newV) {
         this.$refs.scroll_song_list.refresh()
       }
+    },
+    PlayerIsPlaying () {
+      this.$refs.item_ul.classList.remove('pause')
+      if (this.PlayerIsPlaying) {
+        this.$refs.item_ul.classList.add('pause')
+      }
     }
+  },
+  mounted () {
+    this.$refs.scroll_song_list.refresh10()
   }
 }
 
@@ -265,6 +294,10 @@ export default {
           width: 80px;
           height: 80px;
           @include bg_img('../../assets/images/small_un_favorite');
+
+          &.favorite {
+            @include bg_img('../../assets/images/small_favorite');
+          }
         }
 
         .small_close {

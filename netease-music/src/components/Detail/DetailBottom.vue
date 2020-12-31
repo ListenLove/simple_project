@@ -42,8 +42,9 @@ export default {
       const ids = this.tracks.map(function (value) {
         return value.id
       })
-      await this.setSongDetail(ids)
+      await this.setSongDetail(this.tracks[0].id)
       this.setIsPlaying(true)
+      await this.setSongDetail(ids)
     }
   },
   computed: {

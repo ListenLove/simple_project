@@ -9,7 +9,10 @@ import {
   SET_CURRENT_SONG,
   SET_CURRENT_LYRIC,
   DEL_SONG_FROM_SONG_LIST,
-  SET_CURRENT_INDEX, SET_CURRENT_TIME
+  SET_CURRENT_INDEX, SET_CURRENT_TIME,
+  ADD_TO_FAVORITE_LIST,
+  REMOVE_FROM_FAVORITE_LIST,
+  SET_FAV_LIST
 } from '@/store/mutations-type'
 
 export default {
@@ -86,5 +89,39 @@ export default {
   },
   [SET_CURRENT_TIME] (state, curTime) {
     state.currentTime = curTime
+  },
+  [SET_CURRENT_TIME] (state, curTime) {
+    state.currentTime = curTime
+  },
+  [SET_CURRENT_TIME] (state, curTime) {
+    state.currentTime = curTime
+  },
+  [SET_CURRENT_TIME] (state, curTime) {
+    state.currentTime = curTime
+  },
+  [SET_CURRENT_TIME] (state, curTime) {
+    state.currentTime = curTime
+  },
+  [SET_CURRENT_TIME] (state, curTime) {
+    state.currentTime = curTime
+  },
+  [SET_CURRENT_TIME] (state, curTime) {
+    state.currentTime = curTime
+  },
+  [SET_CURRENT_TIME] (state, curTime) {
+    state.currentTime = curTime
+  },
+  [SET_CURRENT_TIME] (state, curTime) {
+    state.currentTime = curTime
+  },
+  [ADD_TO_FAVORITE_LIST] (state, song) {
+    state.favoriteList.push(song)
+  },
+  [REMOVE_FROM_FAVORITE_LIST] (state, song) {
+    const index = state.favoriteList.findIndex(value => song === value)
+    state.favoriteList.splice(index, 1)
+  },
+  [SET_FAV_LIST] (state, list) {
+    state.favoriteList = list
   }
 }

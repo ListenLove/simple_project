@@ -9,7 +9,9 @@ import {
   SET_CURRENT_LYRIC,
   DEL_SONG_FROM_SONG_LIST,
   SET_CURRENT_INDEX,
-  SET_CURRENT_TIME
+  SET_CURRENT_TIME,
+  ADD_TO_FAVORITE_LIST,
+  REMOVE_FROM_FAVORITE_LIST, SET_FAV_LIST
 } from '@/store/mutations-type'
 import { getSongDetail, getSongLyric, getSongURL } from '@/api'
 import { lyricParser } from '@/store/modeType'
@@ -46,7 +48,11 @@ export default {
       const obj = {}
       obj.name = value.name
       obj.id = value.id
-      obj.url = urls.data[i].url
+      for (let j = 0; j < urls.data.length; j++) {
+        if (urls.data[i].id === value.id) {
+          obj.url = urls.data[i].url
+        }
+      }
       let singer = ''
       value.ar.forEach(function (artist, index) {
         if (index === 0) {
@@ -73,5 +79,14 @@ export default {
   },
   setCurrentTime ({ commit }, curTime) {
     commit(SET_CURRENT_TIME, curTime)
+  },
+  addToFavoriteList ({ commit }, song) {
+    commit(ADD_TO_FAVORITE_LIST, song)
+  },
+  removeFromFavoriteList ({ commit }, song) {
+    commit(REMOVE_FROM_FAVORITE_LIST, song)
+  },
+  setFavList ({ commit }, song) {
+    commit(SET_FAV_LIST, song)
   }
 }

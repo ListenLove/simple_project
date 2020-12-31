@@ -8,12 +8,15 @@
         <img :src="currentSong.picUrl" alt="">
       </div>
     </swiper-slide>
-    <swiper-slide class="lyric">
-          <ScrollView ref="scroll_lyric">
-          <ul>
-            <li v-for="(value, index) in currentLyric" :key="index">{{ value }}</li>
-          </ul>
-        </ScrollView>
+    <swiper-slide class="lyric" ref="lyric">
+      <ScrollView ref="scroll_lyric">
+        <ul ref="lyric_ul">
+          <li v-for="(value, index) in currentLyric" :key="index" :class="{'highlight': currentLine === index}">{{
+              value
+            }}
+          </li>
+        </ul>
+      </ScrollView>
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
@@ -49,7 +52,8 @@ export default {
         directives: {
           swiper: directive
         }
-      }
+      },
+      currentLine: '0'
     }
   },
   computed: {
@@ -72,21 +76,60 @@ export default {
       this.setSongLyric(newV.id)
     },
     currentLyric (newV, oldV) {
-      if (newV) {
-        const observer = new MutationObserver(() => {
-          this.$refs.scroll_lyric.refresh10()
-        })
-        observer.observe(this.$refs.scroll_lyric.$el, {
-          childList: true,
-          subtree: true
-        })
+      for (const key in newV) {
+        this.currentLine = key
+        return
       }
-    }
+    },
+    songCurrentTime (val) {
+      const result = Math.floor(val)
+      if (this.currentLine !== val + '' && result) {
+        this.currentLine = this.getFirstLyric(result)
+      }
+    }/*,
+    currentLine () {
+      const midPosition = this.$refs.lyric.$el.offsetHeight / 2
+      const highlightTop = document.querySelector('li.highlight').offsetTop
+      if (highlightTop >= midPosition) {
+        this.$refs.scroll_lyric.scrollTo(0, midPosition - highlightTop, 100)
+        console.log(midPosition - highlightTop)
+      }
+    } */
   },
   methods: {
     ...mapActions([
       'setSongLyric'
-    ])
+    ]),
+    getFirstLyric (lineNum) {
+      if (lineNum <= 0) {
+        return '0'
+      }
+      const result = Math.floor(lineNum)
+      if (result && this.currentLyric[result]) {
+        return result + ''
+      } else {
+        return this.getFirstLyric(lineNum - 1)
+      }
+    }
+  },
+  props: {
+    songCurrentTime: {
+      type: Number,
+      default: 0
+    }
+  },
+  mounted () {
+    const observer = new MutationObserver(() => {
+      const hightlightLi = document.querySelector('li.highlight')
+      const highlightTop = hightlightLi && (hightlightLi.offsetTop || 0)
+      const midPosition = this.$refs.lyric.$el.offsetHeight / 2
+      console.log(midPosition)
+      this.$refs.scroll_lyric.scrollTo(0, midPosition - highlightTop, 100)
+    })
+    observer.observe(this.$refs.lyric.$el, {
+      attributes: ['offsetHeight']
+    })
+    // observer.disconnect()
   }
 }
 </script>
@@ -105,7 +148,8 @@ export default {
   .lyric {
     width: 100%;
     height: 100%;
-    & li {
+
+    li {
       list-style: none;
       @include font_size($font_medium);
       @include font-color();
@@ -113,8 +157,12 @@ export default {
       line-height: 80px;
       text-align: center;
 
+      &.highlight {
+        color: #FFFFFF;
+      }
+
       &:last-of-type {
-        padding-bottom: 50px;
+        padding-bottom: 50%;
       }
     }
   }

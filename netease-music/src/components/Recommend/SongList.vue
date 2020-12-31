@@ -38,8 +38,10 @@ export default {
     },
     async selectSongDetail (id) {
       await this.setSongDetail(id)
-      this.setPlayerNormal(true)
-      this.setIsPlaying(true)
+      setTimeout(() => {
+        this.setPlayerNormal(true)
+        this.setIsPlaying(true)
+      }, 50)
     }
   },
   props: {

@@ -2,8 +2,8 @@
   <div class="player-bottom">
     <div class="top">
       <span ref="currentTimeSpan">00:00</span>
-      <div class="progress-bg" @click="progressClick">
-        <div class="progress-line" ref="progressLine" >
+      <div class="progress-bg" @click="progressClick" ref="progressBg">
+        <div class="progress-line" ref="progressLine">
           <div class="progress-dot"></div>
         </div>
       </div>
@@ -14,7 +14,8 @@
       <div class="prev" @click="prevSong"></div>
       <div class="play" @click="play" ref="play"></div>
       <div class="next" @click="nextSong"></div>
-      <div class="un-favorite"></div>
+      <div class="un-favorite" @click.stop="changeFavorite" :class="{'favorite': isFavorite(this.currentSong) }"
+           ref="favorite"></div>
     </div>
   </div>
 </template>
@@ -30,6 +31,9 @@ export default {
       'setIsPlaying',
       'setModeType',
       'setCurrentIndex',
+      'setCurrentTime',
+      'addToFavoriteList',
+      'removeFromFavoriteList',
       'setCurrentTime'
     ]),
     parseTime (time) {
@@ -60,26 +64,47 @@ export default {
     },
     prevSong () {
       this.setCurrentIndex(this.currentIndex - 1)
+      this.setCurrentTime(0)
       this.setIsPlaying(true)
     },
     nextSong () {
       this.setCurrentIndex(this.currentIndex + 1)
+      this.setCurrentTime(0)
       this.setIsPlaying(true)
     },
     progressClick (e) {
       const offsetLeft = e.target.offsetLeft
-      const offsetWidth = e.target.offsetWidth
+      const offsetWidth = this.$refs.progressBg.offsetWidth
       const clickX = e.pageX
       const value = (clickX - offsetLeft) / offsetWidth
       this.$refs.progressLine.style.width = 100 * value + '%'
       this.setCurrentTime(value * this.songDuration)
+    },
+    changeFavorite () {
+      const result = this.favoriteList.find(value => {
+        if (value.id === this.currentSong.id) return true
+      })
+      if (result) {
+        this.removeFromFavoriteList(this.currentSong)
+        // this.$refs.favorite.classList.remove('favorite')
+      } else {
+        this.addToFavoriteList(this.currentSong)
+        // this.$refs.favorite.classList.add('favorite')
+      }
+    },
+    isFavorite (value) {
+      return this.favoriteList.find(val => {
+        if (val.id === value.id) return true
+      })
     }
   },
   computed: {
     ...mapGetters([
       'PlayerIsPlaying',
       'PlayMode',
-      'currentIndex'
+      'currentIndex',
+      'favoriteList',
+      'currentSong'
     ])
   },
   watch: {
