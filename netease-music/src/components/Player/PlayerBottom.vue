@@ -64,13 +64,11 @@ export default {
     },
     prevSong () {
       this.setCurrentIndex(this.currentIndex - 1)
-      this.setCurrentTime(0)
-      this.setIsPlaying(true)
+      // this.setIsPlaying(true)
     },
     nextSong () {
       this.setCurrentIndex(this.currentIndex + 1)
-      this.setCurrentTime(0)
-      this.setIsPlaying(true)
+      // this.setIsPlaying(true)
     },
     progressClick (e) {
       const offsetLeft = e.target.offsetLeft

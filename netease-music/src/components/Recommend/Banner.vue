@@ -46,7 +46,6 @@ export default {
         observer: true,
         observeParents: true,
         observeSlideChildren: true
-
       }
     }
   },

@@ -1,8 +1,8 @@
 <template>
   <div id="wrapper" ref="wrapper">
-      <div class="content" ref="ul">
-        <slot></slot>
-      </div>
+    <div class="content" ref="ul">
+      <slot></slot>
+    </div>
     <!--    <slot></slot>-->
   </div>
 </template>
@@ -12,15 +12,28 @@ import BScroll from '@better-scroll/core'
 
 export default {
   name: 'ScrollView',
+  dara: () => {
+    return {
+      observer: null
+    }
+  },
   mounted () {
     // 保证在DOM渲染完毕后初始化better-scroll
     this.scroll = new BScroll(this.$refs.wrapper, {
       probeType: 3,
-      autoEndDistance: true
-      // disableTouch: false,
-      // disableMouse: true
+      autoEndDistance: true,
+      observeDOM: true
     })
-    this.refresh()
+    this.observer = new MutationObserver(() => {
+      this.scroll.refresh()
+    })
+    const config = {
+      childList: true, // 监听子节点的变化
+      subtree: true, // 监听后代节点的变化
+      attributeFilter: ['height', 'offsetHeight'] // 观察特定属性
+    }
+    this.observer.observe(this.$refs.wrapper, config)
+    console.log('scroll view mounted')
   },
   methods: {
     // 定义监听 scroll 滚动的事件，将在Y轴上滚动的运动坐标传递给回调函数
@@ -41,12 +54,11 @@ export default {
           attributeFilter: ['height', 'offsetHeight'] // 观察特定属性
         }
         observer.observe(this.$refs.ul, config)
-      }, 100)
+      }, 300)
     },
     refresh10 () {
       setTimeout(() => {
         this.scroll.refresh()
-        console.log('加载完成')
       }, 300)
     },
     scrollTo (x, y, time) {

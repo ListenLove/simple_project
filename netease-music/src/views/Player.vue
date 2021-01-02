@@ -14,6 +14,7 @@ import PlayerMini from '@/components/Player/PlayerMini'
 import PlayerList from '@/components/Player/PlayerList'
 import { mapGetters, mapActions } from 'vuex'
 import { modeType } from '@/store/modeType'
+import { getLocalStorage, getRandomInt, setLocalStorage } from '@/tools/tools'
 
 export default {
   name: 'PlayView',
@@ -33,13 +34,11 @@ export default {
       'setCurrentIndex',
       'setSongDetail',
       'setCurrentTime',
-      'setFavList'
+      'setFavList',
+      'setHistorySong',
+      'setHistoryList',
+      'setCurrentSong'
     ]),
-    getRandomInt (min, max) {
-      min = Math.ceil(min)
-      max = Math.floor(max)
-      return Math.floor(Math.random() * (max - min)) + min // 不含最大值，含最小值
-    },
     isShow () {
       this.$refs.playlist.show()
     },
@@ -52,7 +51,7 @@ export default {
       } else if (modeType.loop === this.PlayMode) {
         this.setCurrentIndex(this.currentIndex + 1)
       } else if (modeType.random === this.PlayMode) {
-        const randIndex = this.getRandomInt(0, this.Songs.length)
+        const randIndex = getRandomInt(0, this.Songs.length)
         this.setCurrentIndex(randIndex)
       }
     }
@@ -68,36 +67,42 @@ export default {
       'currentTime',
       'PlayMode',
       'Songs',
-      'favoriteList'
+      'favoriteList',
+      'historyList'
     ])
   },
   watch: {
-    PlayerIsPlaying (newV, oldV) {
+    PlayerIsPlaying (newV) {
       if (newV) {
         this.$refs.audio.play()
+        this.setCurrentSong(this.Songs[this.currentIndex])
       } else {
         this.$refs.audio.pause()
       }
     },
-    currentIndex () {
-      this.$refs.audio.oncanplay = () => {
-        if (!this.$refs.audio.src) {
-          console.log('没有此歌曲，跳过')
-          this.setCurrentIndex(this.currentIndex + 1)
-        }
-        this.songDuration = this.$refs.audio.duration
-        if (this.PlayerIsPlaying) {
-          this.$refs.audio.play()
-        } else {
-          this.$refs.audio.pause()
-        }
-      }
+    currentIndex (newV) {
+      this.setCurrentSong(this.Songs[newV])
+      this.songDuration = this.$refs.audio.duration
     },
     currentTime (val) {
       this.$refs.audio.currentTime = val
     },
     favoriteList (val) {
-      window.localStorage.setItem('favoriteList', JSON.stringify(val))
+      setLocalStorage('favoriteList', val)
+    },
+    currentSong (val) {
+      console.log(val)
+      this.setHistorySong(val)
+      /* if (!this.$refs.audio.src) {
+        console.log('没有此歌曲，跳过')
+        this.setCurrentIndex(this.currentIndex + 1)
+      } */
+      if (this.PlayerIsPlaying) {
+        this.$refs.audio.play()
+      }
+    },
+    historyList (val) {
+      setLocalStorage('historyList', val)
     }
   },
   mounted () {
@@ -106,9 +111,10 @@ export default {
     }
   },
   created () {
-    const favListLocal = JSON.parse(window.localStorage.getItem('favoriteList'))
-    console.log(favListLocal)
+    const favListLocal = getLocalStorage('favoriteList')
     favListLocal && this.setFavList(favListLocal)
+    const historyList = getLocalStorage('historyList')
+    historyList && this.setHistoryList(historyList)
   }
 }
 </script>

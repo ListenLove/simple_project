@@ -2,7 +2,7 @@
     <div class="header" @click="changeTheme">
         <div class="header-left"></div>
         <p class="header-title">高仿云音乐</p>
-        <div class="header-right"></div>
+        <div class="header-right" @click.stop="toAccount"></div>
     </div>
 </template>
 <script>
@@ -18,6 +18,9 @@ export default {
     changeTheme () {
       document.documentElement.setAttribute('data-theme', this.themes[this.index])
       this.index = (this.index + 1) % 3
+    },
+    toAccount () {
+      this.$router.push('/account')
     }
   }
 }

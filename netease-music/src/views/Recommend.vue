@@ -1,14 +1,14 @@
 <template>
   <div class="recommend">
-    <div class="core-container">
-      <ScrollView>
-        <Banner :banners="banners"></Banner>
-        <Personalized :result="result" :title="'推荐歌单'" @selectId="selectSongDetail"
-                      :typed="'personalized'"></Personalized>
-        <Personalized :result="album" :title="'最新专辑'" @selectId="selectSongDetail" :typed="'album'"></Personalized>
-        <SongList :song_list="songs_list"></SongList>
-      </ScrollView>
-    </div>
+    <!--    <div class="core-container">-->
+    <ScrollView>
+      <Banner :banners="banners"></Banner>
+      <Personalized :result="result" :title="'推荐歌单'" @selectId="selectSongDetail"
+                    :typed="'personalized'"></Personalized>
+      <Personalized :result="album" :title="'最新专辑'" @selectId="selectSongDetail" :typed="'album'"></Personalized>
+      <SongList :song_list="songs_list"></SongList>
+    </ScrollView>
+    <!--    </div>-->
     <transition>
       <router-view></router-view>
     </transition>
@@ -58,7 +58,23 @@ export default {
     getNewSongList()
       .then(value => {
         // console.log(value)
-        this.songs_list = value.result
+        const result = []
+        value.result.forEach(function (value) {
+          const obj = {}
+          obj.id = value.id
+          obj.name = value.name
+          obj.picUrl = value.picUrl
+          obj.singer = ''
+          for (let i = 0; i < value.song.artists.length; i++) {
+            if (i === 0) {
+              obj.singer += value.song.artists[i].name
+            } else {
+              obj.singer += '-' + value.song.artists[i].name
+            }
+          }
+          result.push(obj)
+        })
+        this.songs_list = result
       })
       .catch(reason => {
         console.log(reason)
@@ -93,15 +109,8 @@ export default {
   top: 184px;
   left: 0;
   bottom: 0;
-  //z-index: 999;
   overflow: hidden;
   width: 100%;
-
-  .core-container {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
 }
 
 .v-enter {

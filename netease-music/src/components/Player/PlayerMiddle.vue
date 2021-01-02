@@ -23,7 +23,7 @@
 </template>
 <script>
 import { directive, Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 // import style (<= Swiper 5.x)
 import 'swiper/css/swiper.css'
@@ -53,7 +53,9 @@ export default {
           swiper: directive
         }
       },
-      currentLine: '0'
+      currentLine: '0',
+      observer: null,
+      timeoutTimer: null
     }
   },
   computed: {
@@ -110,6 +112,33 @@ export default {
       } else {
         return this.getFirstLyric(lineNum - 1)
       }
+    },
+    setLyricAutoScroll () {
+      const observer = new MutationObserver(() => {
+        const hightlightLi = document.querySelector('li.highlight')
+        const highlightTop = hightlightLi && (hightlightLi.offsetTop || 0)
+        const midPosition = this.$refs.lyric.$el.offsetHeight / 2
+        console.log(midPosition)
+        this.$refs.scroll_lyric.scrollTo(0, midPosition - highlightTop, 100)
+      })
+      observer.observe(this.$refs.lyric.$el, {
+        attributes: ['offsetHeight']
+      })
+      return observer
+    },
+    // 用户滚动歌词界面时，取消歌词自动滚动
+    clearLyricObserver () {
+      this.observer.disconnect()
+    },
+    // 用户不再滚动歌词界面时，恢复歌词自动滚动
+    continueLyricObserver () {
+      this.timeoutTimer && clearTimeout(this.timeoutTimer)
+      this.timeoutTimer = setTimeout(() => {
+        this.observer.observe(this.$refs.lyric.$el, {
+          attributes: ['offsetHeight']
+        })
+        clearTimeout(this.timeoutTimer)
+      }, 2000)
     }
   },
   props: {
@@ -119,17 +148,9 @@ export default {
     }
   },
   mounted () {
-    const observer = new MutationObserver(() => {
-      const hightlightLi = document.querySelector('li.highlight')
-      const highlightTop = hightlightLi && (hightlightLi.offsetTop || 0)
-      const midPosition = this.$refs.lyric.$el.offsetHeight / 2
-      console.log(midPosition)
-      this.$refs.scroll_lyric.scrollTo(0, midPosition - highlightTop, 100)
-    })
-    observer.observe(this.$refs.lyric.$el, {
-      attributes: ['offsetHeight']
-    })
-    // observer.disconnect()
+    this.observer = this.setLyricAutoScroll()
+    this.$refs.scroll_lyric.$el.addEventListener('touchstart', this.clearLyricObserver, true)
+    this.$refs.scroll_lyric.$el.addEventListener('touchend', this.continueLyricObserver, true)
   }
 }
 </script>

@@ -178,7 +178,7 @@ export default {
       }
     }
   },
-  mounted () {
+  updated () {
     this.$refs.scroll_song_list.refresh10()
   }
 }

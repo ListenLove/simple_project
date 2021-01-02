@@ -12,7 +12,7 @@ import {
   SET_CURRENT_INDEX, SET_CURRENT_TIME,
   ADD_TO_FAVORITE_LIST,
   REMOVE_FROM_FAVORITE_LIST,
-  SET_FAV_LIST
+  SET_FAV_LIST, SET_HISTORY_SONG, SET_HISTORY_LIST
 } from '@/store/mutations-type'
 
 export default {
@@ -123,5 +123,20 @@ export default {
   },
   [SET_FAV_LIST] (state, list) {
     state.favoriteList = list
+  },
+  [SET_HISTORY_SONG] (state, song) {
+    const result = state.historyList.findIndex((value) => {
+      return value.id === song.id
+    })
+    if (result === -1) {
+      if (state.historyList.length >= 30) state.historyList.shift()
+      state.historyList.push(song)
+    } else {
+      state.historyList.splice(result, 1)
+      state.historyList.push(song)
+    }
+  },
+  [SET_HISTORY_LIST] (state, list) {
+    state.historyList = list
   }
 }

@@ -11,7 +11,7 @@ import {
   SET_CURRENT_INDEX,
   SET_CURRENT_TIME,
   ADD_TO_FAVORITE_LIST,
-  REMOVE_FROM_FAVORITE_LIST, SET_FAV_LIST
+  REMOVE_FROM_FAVORITE_LIST, SET_FAV_LIST, SET_HISTORY_SONG, SET_HISTORY_LIST, SET_CURRENT_SONG
 } from '@/store/mutations-type'
 import { getSongDetail, getSongLyric, getSongURL } from '@/api'
 import { lyricParser } from '@/store/modeType'
@@ -80,6 +80,9 @@ export default {
   setCurrentTime ({ commit }, curTime) {
     commit(SET_CURRENT_TIME, curTime)
   },
+  setCurrentSong  ({ commit }, song) {
+    commit(SET_CURRENT_SONG, song)
+  },
   addToFavoriteList ({ commit }, song) {
     commit(ADD_TO_FAVORITE_LIST, song)
   },
@@ -88,5 +91,11 @@ export default {
   },
   setFavList ({ commit }, song) {
     commit(SET_FAV_LIST, song)
+  },
+  setHistorySong ({ commit }, song) {
+    commit(SET_HISTORY_SONG, song)
+  },
+  setHistoryList ({ commit }, list) {
+    commit(SET_HISTORY_LIST, list)
   }
 }
