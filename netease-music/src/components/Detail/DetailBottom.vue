@@ -28,13 +28,14 @@ export default {
       'setFullScreen',
       'setMiniPlayer',
       'setSongDetail',
-      'setIsPlaying'
+      'setIsPlaying',
+      'setCurrentSong'
     ]),
     async selectSong (id) {
       this.setFullScreen(true)
       this.setMiniPlayer(true)
-      // console.log('set full screen')
       await this.setSongDetail(id)
+      this.setCurrentSong(this.Songs[0])
       this.setIsPlaying(true)
     },
     async playAll () {
@@ -42,14 +43,16 @@ export default {
       const ids = this.tracks.map(function (value) {
         return value.id
       })
-      await this.setSongDetail(this.tracks[0].id)
-      this.setIsPlaying(true)
+      // await this.setSongDetail(this.tracks[0].id)
       await this.setSongDetail(ids)
+      this.setIsPlaying(true)
+      this.setCurrentSong(this.Songs[0])
     }
   },
   computed: {
     ...mapGetters([
-      'currentSong'
+      'currentSong',
+      'Songs'
     ])
   }
 }

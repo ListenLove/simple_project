@@ -5,6 +5,8 @@ import store from './store'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 
+// const VConsole = require('vconsole/dist/vconsole.min')
+
 fastclick.attach(document.body)
 // VueLazyLoad options
 Vue.use(VueLazyload, {
@@ -13,6 +15,8 @@ Vue.use(VueLazyload, {
   loading: require('./assets/images/loading.gif')
   // attempt: 1
 })
+// const vConsole = new VConsole()
+// Vue.use(vConsole)
 Vue.config.productionTip = false
 
 new Vue({

@@ -33,7 +33,6 @@ export default {
       attributeFilter: ['height', 'offsetHeight'] // 观察特定属性
     }
     this.observer.observe(this.$refs.wrapper, config)
-    console.log('scroll view mounted')
   },
   methods: {
     // 定义监听 scroll 滚动的事件，将在Y轴上滚动的运动坐标传递给回调函数

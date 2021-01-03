@@ -1,6 +1,7 @@
 import axios from 'axios'
 // 简单封装 axios
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = 'http://192.168.3.9:3000'
+
 // axios.defaults.baseURL = 'http://192.168.1.2:3000'
 function get (path, data) {
   return new Promise((resolve, reject) => {
@@ -15,6 +16,7 @@ function get (path, data) {
       })
   })
 }
+
 function post (path, data) {
   return new Promise((resolve, reject) => {
     axios.post(path, data)
@@ -27,4 +29,7 @@ function post (path, data) {
   })
 }
 
-export default { get, post }
+export default {
+  get,
+  post
+}

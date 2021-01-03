@@ -82,34 +82,10 @@ export default {
   [SET_CURRENT_INDEX] (state, index) {
     if (index < 0) {
       index = state.songs.length - 1
-    } else if (index >= state.songs.length - 1) {
+    } else if (index >= state.songs.length) {
       index = 0
     }
     state.currentIndex = index
-  },
-  [SET_CURRENT_TIME] (state, curTime) {
-    state.currentTime = curTime
-  },
-  [SET_CURRENT_TIME] (state, curTime) {
-    state.currentTime = curTime
-  },
-  [SET_CURRENT_TIME] (state, curTime) {
-    state.currentTime = curTime
-  },
-  [SET_CURRENT_TIME] (state, curTime) {
-    state.currentTime = curTime
-  },
-  [SET_CURRENT_TIME] (state, curTime) {
-    state.currentTime = curTime
-  },
-  [SET_CURRENT_TIME] (state, curTime) {
-    state.currentTime = curTime
-  },
-  [SET_CURRENT_TIME] (state, curTime) {
-    state.currentTime = curTime
-  },
-  [SET_CURRENT_TIME] (state, curTime) {
-    state.currentTime = curTime
   },
   [SET_CURRENT_TIME] (state, curTime) {
     state.currentTime = curTime
@@ -129,11 +105,11 @@ export default {
       return value.id === song.id
     })
     if (result === -1) {
-      if (state.historyList.length >= 30) state.historyList.shift()
-      state.historyList.push(song)
+      if (state.historyList.length >= 30) state.historyList.pop()
+      state.historyList.unshift(song)
     } else {
       state.historyList.splice(result, 1)
-      state.historyList.push(song)
+      state.historyList.unshift(song)
     }
   },
   [SET_HISTORY_LIST] (state, list) {

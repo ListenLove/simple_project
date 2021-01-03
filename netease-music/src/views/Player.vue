@@ -32,12 +32,12 @@ export default {
   methods: {
     ...mapActions([
       'setCurrentIndex',
-      'setSongDetail',
       'setCurrentTime',
       'setFavList',
       'setHistorySong',
       'setHistoryList',
-      'setCurrentSong'
+      'setCurrentSong',
+      'setIsPlaying'
     ]),
     isShow () {
       this.$refs.playlist.show()
@@ -52,6 +52,7 @@ export default {
         this.setCurrentIndex(this.currentIndex + 1)
       } else if (modeType.random === this.PlayMode) {
         const randIndex = getRandomInt(0, this.Songs.length)
+        console.log(randIndex)
         this.setCurrentIndex(randIndex)
       }
     }
@@ -80,9 +81,18 @@ export default {
         this.$refs.audio.pause()
       }
     },
-    currentIndex (newV) {
-      this.setCurrentSong(this.Songs[newV])
-      this.songDuration = this.$refs.audio.duration
+    currentIndex () {
+      this.$refs.audio.load()
+      this.$refs.audio.ondurationchange = () => {
+        this.songDuration = this.$refs.audio.duration
+        if (this.PlayerIsPlaying) {
+          this.$refs.audio.play()
+          this.setHistorySong(this.currentSong)
+          console.log('done')
+        } else {
+          this.$refs.audio.pause()
+        }
+      }
     },
     currentTime (val) {
       this.$refs.audio.currentTime = val
@@ -90,24 +100,20 @@ export default {
     favoriteList (val) {
       setLocalStorage('favoriteList', val)
     },
-    currentSong (val) {
-      console.log(val)
-      this.setHistorySong(val)
-      /* if (!this.$refs.audio.src) {
-        console.log('没有此歌曲，跳过')
-        this.setCurrentIndex(this.currentIndex + 1)
-      } */
-      if (this.PlayerIsPlaying) {
-        this.$refs.audio.play()
-      }
-    },
     historyList (val) {
       setLocalStorage('historyList', val)
     }
   },
   mounted () {
-    this.$refs.audio.oncanplay = () => {
+    this.$refs.audio.ondurationchange = () => {
       this.songDuration = this.$refs.audio.duration
+      if (this.PlayerIsPlaying) {
+        this.$refs.audio.play()
+        this.setHistorySong(this.currentSong)
+        console.log('done')
+      } else {
+        this.$refs.audio.pause()
+      }
     }
   },
   created () {

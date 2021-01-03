@@ -4,7 +4,7 @@
     appear>
     <div class="account">
       <account-header @switchNum="switchNum"></account-header>
-      <account-bottom :songs_list="tabNum === 0?favoriteList:historyList"></account-bottom>
+      <account-bottom :songs_list="tabNum === 0?favoriteList:historyList" :tabNum="tabNum"></account-bottom>
     </div>
   </transition>
 </template>
@@ -29,7 +29,6 @@ export default {
   methods: {
     switchNum (num) {
       this.tabNum = num
-      console.log(this.tabNum)
     }
   },
   computed: {

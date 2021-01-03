@@ -1,6 +1,6 @@
 <template>
   <div class="account-bottom">
-    <div class="play-all">
+    <div class="play-all" @click="playAll">
       <span></span>
       <p>播放全部</p>
     </div>
@@ -16,6 +16,7 @@
 <script>
 import ScrollView from '@/components/ScrollView'
 import SongListItem from '@/components/Recommend/songListItem'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'accountBottom',
@@ -28,6 +29,27 @@ export default {
       type: Array,
       default: () => [],
       required: true
+    },
+    tabNum: {
+      type: Number,
+      default: 0
+    }
+  },
+  methods: {
+    ...mapActions([
+      'setSongDetail',
+      'setMiniPlayer',
+      'setIsPlaying'
+    ]),
+    playAll () {
+      this.setMiniPlayer(true)
+      const ids = this.songs_list.map(function (value) {
+        if (value !== null && value !== undefined) return value.id
+      })
+      // await this.setSongDetail(this.songs_list[0].id)
+      this.setIsPlaying(true)
+      this.setCurrentIndex(0)
+      this.setSongDetail(ids)
     }
   },
   updated () {

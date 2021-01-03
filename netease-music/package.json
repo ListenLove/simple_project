@@ -9,11 +9,13 @@
   },
   "dependencies": {
     "@better-scroll/core": "^2.0.6",
+    "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "fastclick": "^1.0.6",
     "iscroll": "^5.2.0",
     "swiper": "^5.4.5",
+    "vconsole": "^3.3.4",
     "velocity-animate": "^1.5.2",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",

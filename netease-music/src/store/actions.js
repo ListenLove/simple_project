@@ -42,15 +42,17 @@ export default {
   },
   async setSongDetail ({ commit }, ...ids) {
     const result = await getSongDetail({ ids: ids.join(',') })
+    // console.log(result)
     const li = []
     const urls = await getSongURL({ id: ids.join(',') })
+    // console.log(urls)
     result.songs.forEach(function (value, i) {
       const obj = {}
       obj.name = value.name
       obj.id = value.id
       for (let j = 0; j < urls.data.length; j++) {
-        if (urls.data[i].id === value.id) {
-          obj.url = urls.data[i].url
+        if (urls.data[j].id === value.id) {
+          obj.url = urls.data[j].url
         }
       }
       let singer = ''
@@ -63,7 +65,9 @@ export default {
       })
       obj.singer = singer
       obj.picUrl = value.al.picUrl
-      li.push(obj)
+      if (obj.id !== null && obj.id !== undefined) {
+        li.push(obj)
+      }
     })
     commit(SET_SONG_DETAIL, li)
   },
@@ -80,7 +84,7 @@ export default {
   setCurrentTime ({ commit }, curTime) {
     commit(SET_CURRENT_TIME, curTime)
   },
-  setCurrentSong  ({ commit }, song) {
+  setCurrentSong ({ commit }, song) {
     commit(SET_CURRENT_SONG, song)
   },
   addToFavoriteList ({ commit }, song) {

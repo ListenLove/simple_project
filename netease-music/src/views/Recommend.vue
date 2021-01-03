@@ -72,7 +72,9 @@ export default {
               obj.singer += '-' + value.song.artists[i].name
             }
           }
-          result.push(obj)
+          if (obj.id !== null && obj.id !== undefined) {
+            result.push(obj)
+          }
         })
         this.songs_list = result
       })
