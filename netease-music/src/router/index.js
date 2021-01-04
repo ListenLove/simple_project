@@ -40,7 +40,10 @@ const Account = (resolve) => {
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/recommend' },
+  {
+    path: '/',
+    redirect: '/recommend'
+  },
   {
     path: '/recommend',
     component: Recommend,
@@ -56,10 +59,28 @@ const routes = [
       }
     ]
   },
-  { path: '/singers', component: Singer },
-  { path: '/rank', component: Rank },
-  { path: '/search', component: Search },
-  { path: '/account', component: Account }
+  {
+    path: '/singers',
+    component: Singer,
+    children: [
+      {
+        path: 'detail',
+        component: Detail // 歌手详情页
+      }
+    ]
+  },
+  {
+    path: '/rank',
+    component: Rank
+  },
+  {
+    path: '/search',
+    component: Search
+  },
+  {
+    path: '/account',
+    component: Account
+  }
 ]
 
 const router = new VueRouter({

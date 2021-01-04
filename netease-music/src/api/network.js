@@ -3,6 +3,7 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://192.168.3.9:3000'
 
 // axios.defaults.baseURL = 'http://192.168.1.2:3000'
+
 function get (path, data) {
   return new Promise((resolve, reject) => {
     axios.get(path, {
@@ -29,7 +30,20 @@ function post (path, data) {
   })
 }
 
+function all (...requestList) {
+  return new Promise((resolve, reject) => {
+    Promise.all(...requestList)
+      .then(values => {
+        resolve(values)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
 export default {
   get,
-  post
+  post,
+  all
 }

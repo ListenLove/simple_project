@@ -14,7 +14,11 @@
 
 <script>
 import SubHeader from '@/components/Detail/DetailHeader'
-import { getAlbumListDetail, getPlayListDetail } from '@/api'
+import {
+  getAlbumListDetail,
+  getPlayListDetail,
+  getSingerDetailAndDetail
+} from '@/api'
 import DetailTop from '@/components/Detail/DetailTop'
 import DetailBottom from '@/components/Detail/DetailBottom'
 import ScrollView from '@/components/ScrollView'
@@ -48,6 +52,16 @@ export default {
           this.playlist = {
             name: value.album.name,
             coverImgUrl: value.album.picUrl,
+            tracks: value.songs
+          }
+        })
+        .catch(reason => { console.log(reason) })
+    } else if (this.$route.query.typed === 'singer') {
+      getSingerDetailAndDetail({ id: this.$route.query.id })
+        .then(value => {
+          this.playlist = {
+            name: value.artist.name,
+            coverImgUrl: value.artist.cover,
             tracks: value.songs
           }
         })
