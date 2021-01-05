@@ -33,6 +33,7 @@ export default {
 
   img {
     width: 100%;
+    transform: translateY(-150px);
   }
 
   .mask {

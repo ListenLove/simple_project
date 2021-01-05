@@ -1,15 +1,19 @@
 <template>
-  <div class="detail">
-    <sub-header :title="playlist.name"></sub-header>
-    <div class="core-container">
-      <detail-top :url="playlist.coverImgUrl" ref="top"></detail-top>
-      <div class="container">
-        <ScrollView ref="scrollView">
-          <detail-bottom :tracks="playlist.tracks"></detail-bottom>
-        </ScrollView>
+  <transition
+  enter-active-class="animate__animated animate__slideInRight"
+  appear>
+    <div class="detail">
+      <sub-header :title="playlist.name"></sub-header>
+      <div class="core-container">
+        <detail-top :url="playlist.coverImgUrl" ref="top"></detail-top>
+        <div class="container">
+          <ScrollView ref="scrollView">
+            <detail-bottom :tracks="playlist.tracks"></detail-bottom>
+          </ScrollView>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -17,11 +21,12 @@ import SubHeader from '@/components/Detail/DetailHeader'
 import {
   getAlbumListDetail,
   getPlayListDetail,
-  getSingerDetailAndDetail
+  getSingerDetailAndSongs
 } from '@/api'
 import DetailTop from '@/components/Detail/DetailTop'
 import DetailBottom from '@/components/Detail/DetailBottom'
 import ScrollView from '@/components/ScrollView'
+import 'animate.css/animate.min.css'
 
 export default {
   name: 'Detail',
@@ -38,7 +43,7 @@ export default {
   },
   created () {
     // console.log(this.$route.query)
-    if (this.$route.query.typed === 'personalized') {
+    if (this.$route.query.typed === 'personalized' || this.$route.query.typed === 'rank') {
       getPlayListDetail({ id: this.$route.query.id })
         .then(value => {
           // console.log(value)
@@ -57,7 +62,7 @@ export default {
         })
         .catch(reason => { console.log(reason) })
     } else if (this.$route.query.typed === 'singer') {
-      getSingerDetailAndDetail({ id: this.$route.query.id })
+      getSingerDetailAndSongs({ id: this.$route.query.id })
         .then(value => {
           this.playlist = {
             name: value.artist.name,

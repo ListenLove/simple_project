@@ -24,9 +24,7 @@
       </li>
     </ul>
     <h2 class="fix-title" v-show="fix_title() !== ''" ref="fixTitle">{{ fix_title() }}</h2>
-    <transition enter-active-class="animate__animated animate__slideInRight" appear>
-      <router-view></router-view>
-    </transition>
+    <router-view></router-view>
   </div>
 </template>
 
