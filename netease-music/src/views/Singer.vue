@@ -1,29 +1,31 @@
 <template>
   <div class="singer">
-    <scroll-view ref="scroll">
-      <ul class="singers-wrapper">
-        <li class="singer-letter" v-for="(value, index) in keys" :key="index" ref="group">
-          <h2>{{ value }}</h2>
-          <ul class="singer-item">
-            <li v-for="(value, i) in result[index]" :key="i" @click.stop="selectSingerDetail(value.id, 'singer')">
-              <img v-lazy="value.picUrl" alt="">
-              <p>{{ value.name }}</p>
-            </li>
-          </ul>
+    <div class="singer-wrap">
+      <scroll-view ref="scroll">
+        <ul class="singers-wrapper">
+          <li class="singer-letter" v-for="(value, index) in keys" :key="index" ref="group">
+            <h2>{{ value }}</h2>
+            <ul class="singer-item">
+              <li v-for="(value, i) in result[index]" :key="i" @click.stop="selectSingerDetail(value.id, 'singer')">
+                <img v-lazy="value.picUrl" alt="">
+                <p>{{ value.name }}</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </scroll-view>
+      <ul class="singer-keys">
+        <li v-for="(key, i) in keys" :key="key"
+            :class="{'active': currentIndex === i}"
+            @touchstart.stop.prevent="touchstart($event, i)"
+            @touchmove.stop.prevent="touchmove($event, i)"
+        >
+          <a :href="'#'+key"
+          >{{ key }}</a>
         </li>
       </ul>
-    </scroll-view>
-    <ul class="singer-keys">
-      <li v-for="(key, i) in keys" :key="key"
-          :class="{'active': currentIndex === i}"
-          @touchstart.stop.prevent="touchstart($event, i)"
-          @touchmove.stop.prevent="touchmove($event, i)"
-      >
-        <a :href="'#'+key"
-        >{{ key }}</a>
-      </li>
-    </ul>
-    <h2 class="fix-title" v-show="fix_title() !== ''" ref="fixTitle">{{ fix_title() }}</h2>
+      <h2 class="fix-title" v-show="fix_title() !== ''" ref="fixTitle">{{ fix_title() }}</h2>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -150,96 +152,100 @@ export default {
 @import "src/assets/css/mixin";
 
 .singer {
-  position: fixed;
-  overflow: hidden;
-  top: 184px;
-  bottom: 0;
   width: 100%;
+  height: 100%;
+  .singer-wrap {
+    position: absolute;
+    overflow: hidden;
+    top: 184px;
+    bottom: 0;
+    width: 100%;
 
-  .singers-wrapper {
-    @include font_size($font_medium_s);
-    @include bg_color();
-    color: #FFFFFF;
+    .singers-wrapper {
+      @include font_size($font_medium_s);
+      @include bg_color();
+      color: #FFFFFF;
 
-    .singer-letter {
-      h2 {
-        margin-left: 24px;
-        height: 60px;
-        line-height: 60px;
-        @include font_size($font_large);
-      }
+      .singer-letter {
+        h2 {
+          margin-left: 24px;
+          height: 60px;
+          line-height: 60px;
+          @include font_size($font_large);
+        }
 
-      border: 1px solid #aaaaaa;
+        border: 1px solid #aaaaaa;
 
-      .singer-item {
-        border: 1px solid #000000;
+        .singer-item {
+          border: 1px solid #000000;
 
-        li {
-          height: 100px;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          @include bg_sub_color();
-          @include font-color();
-          border: 1px solid #cccccc;
+          li {
+            height: 100px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            @include bg_sub_color();
+            @include font-color();
+            border: 1px solid #cccccc;
 
-          img {
-            padding-left: 20px;
-            width: 84px;
-            height: 84px;
-            border-radius: 50%;
-            overflow: hidden;
-          }
+            img {
+              padding-left: 20px;
+              width: 84px;
+              height: 84px;
+              border-radius: 50%;
+              overflow: hidden;
+            }
 
-          p {
-            @include font_size($font_medium_s);
-            padding-left: 20px;
+            p {
+              @include font_size($font_medium_s);
+              padding-left: 20px;
+            }
           }
         }
       }
     }
-  }
 
-  .singer-keys {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    right: 0;
-    top: 50%;
-    padding: 5px;
-    transform: translateY(-40%);
+    .singer-keys {
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      right: 0;
+      top: 50%;
+      padding: 5px;
+      transform: translateY(-40%);
 
-    li {
-      text-align: center;
-      @include font_size($font_medium_s);
-      display: inline-block;
-      list-style: none;
+      li {
+        text-align: center;
+        @include font_size($font_medium_s);
+        display: inline-block;
+        list-style: none;
 
-      &.active {
-        animation: flickr 2s infinite ease-in-out alternate;
-        animation-play-state: running;
-      }
+        &.active {
+          animation: flickr 2s infinite ease-in-out alternate;
+          animation-play-state: running;
+        }
 
-      a {
-        text-decoration: none;
-        @include font-color();
-        opacity: 0.6;
-        padding: 5px;
+        a {
+          text-decoration: none;
+          @include font-color();
+          opacity: 0.6;
+          padding: 5px;
+        }
       }
     }
-  }
 
-  .fix-title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    color: #FFFFFF;
-    box-sizing: border-box;
-    @include font_size($font_large);
-    @include bg_color();
-    padding: 10px 26px;
+    .fix-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      color: #FFFFFF;
+      box-sizing: border-box;
+      @include font_size($font_large);
+      @include bg_color();
+      padding: 10px 26px;
+    }
   }
 }
 

@@ -9,6 +9,8 @@ import Loading from './plugins/loading'
 /* eslint-disable-next-line */
 import 'element-ui/lib/theme-chalk/icon.css'
 // const VConsole = require('vconsole/dist/vconsole.min')
+// const vConsole = new VConsole()
+// Vue.use(vConsole)
 fastclick.attach(document.body)
 // VueLazyLoad options
 Vue.use(VueLazyload, {
@@ -19,8 +21,6 @@ Vue.use(VueLazyload, {
 })
 // 使用 element ui 的图标组件
 Vue.use(Icon)
-// const vConsole = new VConsole()
-// Vue.use(vConsole)
 Vue.use(Loading)
 Vue.config.productionTip = false
 

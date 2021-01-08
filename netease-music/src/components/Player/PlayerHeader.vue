@@ -8,7 +8,7 @@
       <div class="header-right"></div>
     </div>-->
   <MainHeader>
-    <div class="header-left" @click="hiddenPlayerNormal" slot="left"></div>
+    <div class="header-left" @click.stop="hiddenPlayerNormal" slot="left"></div>
     <div class="header-title" slot="middle">
       <h3>{{ currentSong.name }}</h3>
       <p>{{ currentSong.singer }}</p>

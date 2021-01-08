@@ -100,8 +100,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  z-index: 999;
+  //z-index: 999;
   @include bg_sub_color();
 
   .core-container {

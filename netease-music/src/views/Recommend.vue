@@ -1,13 +1,15 @@
 <template>
   <div class="recommend">
     <!--    <div class="core-container">-->
-    <ScrollView>
-      <Banner :banners="banners"></Banner>
-      <Personalized :result="result" :title="'推荐歌单'" @selectId="selectSongDetail"
-                    :typed="'personalized'"></Personalized>
-      <Personalized :result="album" :title="'最新专辑'" @selectId="selectSongDetail" :typed="'album'"></Personalized>
-      <SongList :song_list="songs_list"></SongList>
-    </ScrollView>
+    <div class="recommend-wrap">
+      <ScrollView>
+        <Banner :banners="banners"></Banner>
+        <Personalized :result="result" :title="'推荐歌单'" @selectId="selectSongDetail"
+                      :typed="'personalized'"></Personalized>
+        <Personalized :result="album" :title="'最新专辑'" @selectId="selectSongDetail" :typed="'album'"></Personalized>
+        <SongList :song_list="songs_list"></SongList>
+      </ScrollView>
+    </div>
     <!--    </div>-->
     <transition>
       <router-view></router-view>
@@ -107,12 +109,17 @@ export default {
 
 <style scoped lang="scss">
 .recommend {
-  position: fixed;
-  top: 184px;
-  left: 0;
-  bottom: 0;
-  overflow: hidden;
   width: 100%;
+  height: 100%;
+
+  .recommend-wrap {
+    position: absolute;
+    top: 184px;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    width: 100%;
+  }
 }
 
 .v-enter {

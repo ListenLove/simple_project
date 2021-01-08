@@ -1,34 +1,36 @@
 <template>
   <div class="rank">
-    <scroll-view>
-      <ul class="wrap">
-        <li class="title" v-for="(value, key) in category.titles" :key="key">
-          <h2>{{ value }}</h2>
-          <ul class="rank-list" v-if="value==='官方榜'">
-            <li class="item-lr" v-for="(item, i) in category[key]" :key="i" @click.stop="rankDetail(item.rank.id)">
-              <div class="left">
-                <img v-lazy="item.rank.coverImgUrl" alt="">
-                <p>{{ item.rank.updateFrequency }}</p>
-              </div>
-              <div class="right">
-                <p v-for="(song, index) in item.rank.tracks" :key="index">{{ index + 1 }}-{{
-                    song.first
-                  }}-{{ song.second }}</p>
-              </div>
-            </li>
-          </ul>
-          <ul class="rank-other-list" v-else>
-            <li class="item-tb" v-for="(item, i) in category[key]" :key="i" @click.stop="rankDetail(item.rank.id)">
-              <div class="top">
-                <img v-lazy="item.rank.coverImgUrl" alt="">
-                <p>{{ item.rank.updateFrequency }}</p>
-              </div>
-              <p class="bottom">{{ item.rank.name }}</p>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </scroll-view>
+    <div class="rank-wrap">
+      <scroll-view>
+        <ul class="wrap">
+          <li class="title" v-for="(value, key) in category.titles" :key="key">
+            <h2>{{ value }}</h2>
+            <ul class="rank-list" v-if="value==='官方榜'">
+              <li class="item-lr" v-for="(item, i) in category[key]" :key="i" @click.stop="rankDetail(item.rank.id)">
+                <div class="left">
+                  <img v-lazy="item.rank.coverImgUrl" alt="">
+                  <p>{{ item.rank.updateFrequency }}</p>
+                </div>
+                <div class="right">
+                  <p v-for="(song, index) in item.rank.tracks" :key="index">{{ index + 1 }}-{{
+                      song.first
+                    }}-{{ song.second }}</p>
+                </div>
+              </li>
+            </ul>
+            <ul class="rank-other-list" v-else>
+              <li class="item-tb" v-for="(item, i) in category[key]" :key="i" @click.stop="rankDetail(item.rank.id)">
+                <div class="top">
+                  <img v-lazy="item.rank.coverImgUrl" alt="">
+                  <p>{{ item.rank.updateFrequency }}</p>
+                </div>
+                <p class="bottom">{{ item.rank.name }}</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </scroll-view>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -76,108 +78,115 @@ export default {
 @import '../assets/css/variable';
 
 .rank {
-  position: fixed;
-  top: 184px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
 
-  .wrap {
-    list-style: none;
+  .rank-wrap {
+    position: fixed;
+    top: 184px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
 
-    .title {
-      @include bg_sub_color();
+    .wrap {
+      list-style: none;
 
-      h2 {
-        position: relative;
-        top: 0;
-        @include font_size($font_large);
-        @include font-color();
-        padding: 10px 20px;
-        box-sizing: border-box;
-      }
+      .title {
+        @include bg_sub_color();
 
-      .rank-list {
-        .item-lr {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
+        h2 {
+          position: relative;
+          top: 0;
+          @include font_size($font_large);
+          @include font-color();
+          padding: 10px 20px;
+          box-sizing: border-box;
+        }
 
-          .left {
-            margin: 10px 20px;
-            border-radius: 10px;
-            height: 200px;
-            width: 200px;
-            overflow: hidden;
-            position: relative;
+        .rank-list {
+          .item-lr {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
 
-            img {
-              width: 100%;
-              height: 100%;
+            .left {
+              margin: 10px 20px;
+              border-radius: 10px;
+              height: 200px;
+              width: 200px;
+              overflow: hidden;
+              position: relative;
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+
+              p {
+                position: absolute;
+                right: 10px;
+                bottom: 5px;
+                @include font_size($font_medium_s);
+                color: #FFFFFF;
+              }
             }
 
-            p {
-              position: absolute;
-              right: 10px;
-              bottom: 5px;
-              @include font_size($font_medium_s);
-              color: #FFFFFF;
-            }
-          }
+            .right {
+              @include no-wrap();
 
-          .right {
-            @include no-wrap();
-            p {
-              width: 100%;
-              padding: 10px;
-              @include font-color();
-              @include font_size($font_medium);
+              p {
+                width: 100%;
+                padding: 10px;
+                @include font-color();
+                @include font_size($font_medium);
+              }
             }
           }
         }
-      }
 
-      .rank-other-list {
-        display: flex;
-        flex-wrap: wrap;
+        .rank-other-list {
+          display: flex;
+          flex-wrap: wrap;
 
-        .item-tb {
+          .item-tb {
 
-          .top {
-            margin: 10px 20px;
-            border-radius: 10px;
-            height: 200px;
-            width: 200px;
-            overflow: hidden;
-            position: relative;
+            .top {
+              margin: 10px 20px;
+              border-radius: 10px;
+              height: 200px;
+              width: 200px;
+              overflow: hidden;
+              position: relative;
 
-            img {
-              width: 100%;
-              height: 100%;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+
+              p {
+                position: absolute;
+                right: 10px;
+                bottom: 5px;
+                @include font_size($font_medium_s);
+                color: #FFFFFF;
+              }
             }
 
-            p {
-              position: absolute;
-              right: 10px;
-              bottom: 5px;
+            .bottom {
+              text-blink: random(10);
+              width: 200px;
+              padding: 10px 20px;
+              text-align: center;
+              @include font-color();
               @include font_size($font_medium_s);
-              color: #FFFFFF;
+              @include no-wrap();
             }
-          }
-
-          .bottom {
-            text-blink: random(10);
-            width: 200px;
-            padding: 10px 20px;
-            text-align: center;
-            @include font-color();
-            @include font_size($font_medium_s);
-            @include no-wrap();
           }
         }
       }
     }
   }
+
 }
 </style>
