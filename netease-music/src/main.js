@@ -5,6 +5,7 @@ import store from './store'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 import { Icon } from 'element-ui'
+import Loading from './plugins/loading'
 /* eslint-disable-next-line */
 import 'element-ui/lib/theme-chalk/icon.css'
 // const VConsole = require('vconsole/dist/vconsole.min')
@@ -20,6 +21,7 @@ Vue.use(VueLazyload, {
 Vue.use(Icon)
 // const vConsole = new VConsole()
 // Vue.use(vConsole)
+Vue.use(Loading)
 Vue.config.productionTip = false
 
 new Vue({
