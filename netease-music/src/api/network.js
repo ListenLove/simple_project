@@ -4,6 +4,7 @@ axios.defaults.baseURL = 'http://192.168.3.9:3000'
 
 // axios.defaults.baseURL = 'http://192.168.1.2:3000'
 
+axios.defaults.timeout = 2000
 function get (path, data) {
   return new Promise((resolve, reject) => {
     axios.get(path, {

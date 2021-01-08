@@ -101,7 +101,7 @@ export default {
       .rank-list {
         .item-lr {
           display: flex;
-          justify-content: start;
+          justify-content: flex-start;
           align-items: center;
 
           .left {
@@ -127,11 +127,12 @@ export default {
           }
 
           .right {
+            @include no-wrap();
             p {
-              padding: 10px 20px;
+              width: 100%;
+              padding: 10px;
               @include font-color();
               @include font_size($font_medium);
-              @include no-wrap();
             }
           }
         }

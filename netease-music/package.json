@@ -12,6 +12,7 @@
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "element-ui": "^2.14.1",
     "fastclick": "^1.0.6",
     "iscroll": "^5.2.0",
     "swiper": "^5.4.5",
