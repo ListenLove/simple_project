@@ -1,19 +1,31 @@
 <template>
-  <div class="header">
-    <div class="header-left" @click="hiddenPlayerNormal"></div>
-    <div class="header-title">
+  <!--  <div class="header">
+      <div class="header-left" @click="hiddenPlayerNormal"></div>
+      <div class="header-title">
+        <h3>{{ currentSong.name }}</h3>
+        <p>{{ currentSong.singer }}</p>
+      </div>
+      <div class="header-right"></div>
+    </div>-->
+  <MainHeader>
+    <div class="header-left" @click="hiddenPlayerNormal" slot="left"></div>
+    <div class="header-title" slot="middle">
       <h3>{{ currentSong.name }}</h3>
       <p>{{ currentSong.singer }}</p>
     </div>
-    <div class="header-right"></div>
-  </div>
+    <div class="header-right" slot="right"></div>
+  </MainHeader>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import MainHeader from '@/components/MainHeader'
 
 export default {
   name: 'PlayerHeader',
+  components: {
+    MainHeader
+  },
   methods: {
     ...mapActions([
       'setPlayerNormal',
@@ -37,44 +49,31 @@ export default {
 @import "src/assets/css/variable";
 @import "src/assets/css/mixin";
 
-.header {
-  @include font_size($font_medium);
-  width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: space-between;
+.header-title {
+  text-align: center;
+  color: #FFFFFF;
+  width: auto;
 
-  .header-left, .header-right {
-    width: 90px;
-    height: 90px;
-    margin: 5px 10px;
+  h3 {
+    margin-top: 5px;
+    @include font_size($font_large);
   }
 
-  .header-title {
-    text-align: center;
-    color: #FFFFFF;
-    width: auto;
-
-    h3 {
-      margin-top: 5px;
-      @include font_size($font_large);
-    }
-
-    p {
-      margin-top: 5px;
-      @include font_size($font_medium_s);
-      opacity: 0.8;
-    }
-  }
-
-  .header-left {
-    $url: '../../assets/images/down';
-    @include bg_img($url);
-  }
-
-  .header-right {
-    $url: '../../assets/images/more';
-    @include bg_img($url);
+  p {
+    margin-top: 5px;
+    @include font_size($font_medium_s);
+    opacity: 0.8;
   }
 }
+
+.header-left {
+  $url: '../../assets/images/down';
+  @include bg_img($url);
+}
+
+.header-right {
+  $url: '../../assets/images/more';
+  @include bg_img($url);
+}
+
 </style>

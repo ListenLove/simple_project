@@ -21,6 +21,7 @@ export default {
 @import "src/assets/css/mixin";
 
 .loading {
+  user-select: none;
   position: absolute;
   z-index: 999;
   top: 50%;

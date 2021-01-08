@@ -25,7 +25,6 @@ axios.interceptors.response.use(function (response) {
   count--
   if (count === 0) {
     Vue.hiddenLoading()
-    console.log(count)
   }
   return response
 }, function (error) {
