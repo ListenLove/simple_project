@@ -1,12 +1,10 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Node.js CI For NetEase Vue Project Build And Deploy
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
 jobs:
@@ -21,10 +19,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Buil Netease Vue Project ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd ./netease-music && ls -l
     - run: cd ./netease-music && npm install && npm run build
-    - run: cd ./netease-music && ls -l
+    - name: Rsync Deploy Action
+      uses: Burnett01/rsync-deployments@4.1
+      with:
+        # The switches
+        switches: -r -hP
+        # The remote shell argument
+        rsh: ./netease-music/dist
+        # The local path
+        remote_path: /usr/share/nginx/music/
+        # The remote host
+        remote_host: ${{ secrets.SSH_HOST }}
+        remote_port: 22
+        # The remote user
+        remote_user: ${{ secrets.SSH_USER }}
+        # The remote key
+        remote_key: ${{ secrets.DEPLOY_KEY }}
