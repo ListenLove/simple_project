@@ -30,9 +30,8 @@ jobs:
       with:
         # The switches
         switches: -r -hP
-        # The remote shell argument
-        rsh: ./netease-music/dist
         # The local path
+        path:: ./netease-music/dist
         remote_path: /usr/share/nginx/music/
         # The remote host
         remote_host: ${{ secrets.SSH_HOST }}
