@@ -24,6 +24,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: cd ./netease-music && npm install && npm run build
+    - run: ls -l ./netease-music/dist
     - name: Rsync Deploy Action
       uses: Burnett01/rsync-deployments@4.1
       with:
