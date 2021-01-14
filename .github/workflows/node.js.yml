@@ -31,7 +31,7 @@ jobs:
         # The switches
         switches: -r -hP
         # The local path
-        path:: ./netease-music/dist
+        path: ./netease-music/dist
         remote_path: /usr/share/nginx/music/
         # The remote host
         remote_host: ${{ secrets.SSH_HOST }}
