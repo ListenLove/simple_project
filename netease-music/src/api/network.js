@@ -1,7 +1,8 @@
 import axios from 'axios'
 import Vue from 'vue'
 // 简单封装 axios
-axios.defaults.baseURL = 'http://192.168.3.9:3000'
+// axios.defaults.baseURL = 'http://192.168.3.9:3000'
+axios.defaults.baseURL = 'http://8.129.163.107:80/api/'
 
 // axios.defaults.baseURL = 'http://192.168.1.2:3000'
 // Add a request interceptor
@@ -33,7 +34,7 @@ axios.interceptors.response.use(function (response) {
   Vue.hiddenLoading()
   return Promise.reject(error)
 })
-axios.defaults.timeout = 5000
+axios.defaults.timeout = 10000
 
 function get (path, data) {
   return new Promise((resolve, reject) => {

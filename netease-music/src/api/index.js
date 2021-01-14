@@ -128,17 +128,17 @@ export const getAllRankBrief = () => {
         id: 26
       },
       {
-        name: '云音乐ACG音乐榜',
+        name: '云音乐ACG榜',
         id: 22
       },
       {
-        name: '云音乐古典音乐榜',
+        name: '云音乐古典榜',
         id: 24
       }
     ],
     globalList: [
       {
-        name: '美国Billboard周榜',
+        name: '美国Billboard榜',
         id: 6
       },
       {
@@ -150,17 +150,17 @@ export const getAllRankBrief = () => {
         id: 21
       },
       {
-        name: '日本Oricon数字单曲周榜',
+        name: '日本Oricon榜',
         id: 10
       },
       {
         name: 'iTunes榜',
         id: 8
-      },
+      }/*,
       {
         name: '英国Q杂志中文版周榜',
         id: 29
-      }
+      } */
     ],
     otherList: [
       {
