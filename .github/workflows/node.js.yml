@@ -26,17 +26,10 @@ jobs:
     - run: cd ./netease-music && npm install && npm run build
     - run: ls -l ./netease-music/dist
     - name: Rsync Deploy Action
-      uses: Burnett01/rsync-deployments@4.1
+      uses: easingthemes/ssh-deploy@v2.1.5
       with:
-        # The switches
-        switches: -r -hP
-        # The local path
-        path: ./netease-music/dist
-        remote_path: /usr/share/nginx/music/
-        # The remote host
-        remote_host: ${{ secrets.SSH_HOST }}
-        remote_port: 22
-        # The remote user
-        remote_user: ${{ secrets.SSH_USER }}
-        # The remote key
-        remote_key: ${{ secrets.DEPLOY_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+        REMOTE_HOST: ${{ secrets.SSH_HOST }}
+        REMOTE_USER: ${{ secrets.SSH_USER }}
+        SOURCE: ./netease-music/dist
+        TARGET: /usr/share/nginx/music/
