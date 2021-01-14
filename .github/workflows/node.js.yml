@@ -31,5 +31,5 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
         REMOTE_HOST: ${{ secrets.SSH_HOST }}
         REMOTE_USER: ${{ secrets.SSH_USER }}
-        SOURCE: ./netease-music/dist
-        TARGET: /usr/share/nginx/music/
+        SOURCE: ./netease-music/dist/*
+        TARGET: ${{ secrets.MUSIC_TARGET_DIR }}
