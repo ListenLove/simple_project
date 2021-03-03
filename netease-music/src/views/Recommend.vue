@@ -8,6 +8,7 @@
                       :typed="'personalized'"></Personalized>
         <Personalized :result="album" :title="'最新专辑'" @selectId="selectSongDetail" :typed="'album'"></Personalized>
         <SongList :song_list="songs_list"></SongList>
+        <homepage-footer></homepage-footer>
       </ScrollView>
     </div>
     <!--    </div>-->
@@ -23,10 +24,12 @@ import Banner from '@/components/Recommend/Banner'
 import Personalized from '@/components/Recommend/Personalized'
 import SongList from '@/components/Recommend/SongList'
 import ScrollView from '@/components/ScrollView'
+import HomepageFooter from '@/components/HomepageFooter'
 
 export default {
   name: 'Recommend',
   components: {
+    HomepageFooter,
     ScrollView,
     SongList,
     Personalized,

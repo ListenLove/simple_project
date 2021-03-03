@@ -1,10 +1,8 @@
 import axios from 'axios'
 import Vue from 'vue'
 // 简单封装 axios
-// axios.defaults.baseURL = 'http://192.168.3.9:3000'
-axios.defaults.baseURL = 'http://8.129.163.107:80/api/'
+axios.defaults.baseURL = 'http://www.wenbin150.com/api/'
 
-// axios.defaults.baseURL = 'http://192.168.1.2:3000'
 // Add a request interceptor
 // 部分设置发送 all中所有请求， 每一次请求时加一，返回多少响应对应的减一
 let count = 0

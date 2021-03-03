@@ -63,7 +63,6 @@ export default {
     getAllRankBrief()
       .then(value => {
         this.category = value
-        console.log(this.category)
       })
       .catch(reason => {
         console.log(reason)
@@ -133,13 +132,16 @@ export default {
             }
 
             .right {
-              @include no-wrap();
+              box-sizing: border-box;
+              width: calc(100% - 240px - 20px);
+              overflow: hidden;
 
               p {
                 width: 100%;
                 padding: 10px;
                 @include font-color();
                 @include font_size($font_medium);
+                @include no-wrap();
               }
             }
           }
