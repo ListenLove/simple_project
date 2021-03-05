@@ -6,8 +6,8 @@
           v-if="banners.length > 1">
     <swiper-slide v-for="banner in banners" :key="banner.bannerId">
       <a :href="banner.url">
-<!--        <img :src="banner.pic" alt="">-->
-                <img v-lazy="banner.pic" alt="">
+        <!--        <img :src="banner.pic" alt="">-->
+        <img v-lazy="banner.pic" alt="">
       </a>
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
@@ -34,10 +34,11 @@ export default {
       swiperOption: {
         loop: true,
         autoplay: {
-          delay: 1000, // 自动切换的时间间隔，单位ms
+          delay: 3000, // 自动切换的时间间隔，单位ms
           stopOnLastSlide: false, // 当切换到最后一个slide时停止自动切换
           disableOnInteraction: false // 用户操作swiper之后，是否禁止autoplay。
         },
+        speed: 2500, // 切换速度过快，降低切换速率至适宜速率
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination'
@@ -65,6 +66,7 @@ export default {
 .banner {
   width: 100%;
   height: 300px;
+
   img {
     width: 100%;
     height: 100%;
@@ -80,9 +82,10 @@ export default {
 @import "../../assets/css/variable";
 
 .banner {
-    .swiper-pagination {
+  .swiper-pagination {
     bottom: -20px;
   }
+
   .swiper-pagination-bullet {
     display: inline-block;
     height: $font_medium;

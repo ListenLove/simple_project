@@ -32,7 +32,7 @@ axios.interceptors.response.use(function (response) {
   Vue.hiddenLoading()
   return Promise.reject(error)
 })
-axios.defaults.timeout = 10000
+axios.defaults.timeout = 5000
 
 function get (path, data) {
   return new Promise((resolve, reject) => {

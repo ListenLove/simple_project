@@ -42,10 +42,10 @@ export default {
   },
   async setSongDetail ({ commit }, ...ids) {
     const result = await getSongDetail({ ids: ids.join(',') })
-    // console.log(result)
+    console.log(result)
     const li = []
     const urls = await getSongURL({ id: ids.join(',') })
-    // console.log(urls)
+    console.log(urls)
     result.songs.forEach(function (value, i) {
       const obj = {}
       obj.name = value.name

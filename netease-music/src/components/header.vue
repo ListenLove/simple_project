@@ -6,7 +6,7 @@
       </div>-->
   <MainHeader>
     <div class="header-left" slot="left"></div>
-    <p class="header-title" slot="middle">高仿云音乐</p>
+    <p class="header-title" slot="middle">VUE 云音乐</p>
     <div class="header-right" @click.stop="toAccount" slot="right"></div>
   </MainHeader>
 </template>

@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
-import { Icon } from 'element-ui'
+import { Icon, Backtop } from 'element-ui'
 import Loading from './plugins/loading'
 /* eslint-disable-next-line */
 import 'element-ui/lib/theme-chalk/icon.css'
@@ -22,6 +22,7 @@ Vue.use(VueLazyload, {
 // 使用 element ui 的图标组件
 Vue.use(Icon)
 Vue.use(Loading)
+Vue.use(Backtop)
 Vue.config.productionTip = false
 
 new Vue({

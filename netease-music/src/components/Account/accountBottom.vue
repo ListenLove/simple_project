@@ -39,7 +39,8 @@ export default {
     ...mapActions([
       'setSongDetail',
       'setMiniPlayer',
-      'setIsPlaying'
+      'setIsPlaying',
+      'setCurrentIndex'
     ]),
     playAll () {
       this.setMiniPlayer(true)
@@ -47,9 +48,11 @@ export default {
         if (value !== null && value !== undefined) return value.id
       })
       // await this.setSongDetail(this.songs_list[0].id)
-      this.setIsPlaying(true)
-      this.setCurrentIndex(0)
       this.setSongDetail(ids)
+      document.querySelector('audio').addEventListener('canplay', () => {
+        this.setIsPlaying(true)
+        this.setCurrentIndex(0)
+      })
     }
   },
   updated () {
