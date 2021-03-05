@@ -192,7 +192,7 @@ export default {
 .player-list {
   width: 100%;
   position: fixed;
-  top: 700px;
+  top: 600px;
   bottom: 0;
   left: 0;
   @include bg_sub_color();
@@ -316,7 +316,7 @@ export default {
   }
 
   .bottom {
-    position: fixed;
+    position: absolute;
     left: 0;
     bottom: 0;
     height: 100px;
