@@ -49,7 +49,7 @@ export default {
       })
       // await this.setSongDetail(this.songs_list[0].id)
       this.setSongDetail(ids)
-      document.querySelector('audio').addEventListener('canplay', () => {
+      document.querySelector('audio').addEventListener('durationchange', () => {
         this.setIsPlaying(true)
         this.setCurrentIndex(0)
       })
